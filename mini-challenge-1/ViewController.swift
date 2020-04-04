@@ -11,13 +11,34 @@ import CoreData
 
 class ViewController: UIViewController {
 
+    @IBOutlet weak var dateLabel: UILabel!
+    
+    let dateFormat1: DateFormatter = DateFormatter ()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
-        storeDataMessage()
+        //storeDataMessage()
+        
+        self.navigationController?.isNavigationBarHidden = true //untuk hilangin navigation bar
+        showDate()//untuk set dateLabel jadi tanggal hari ini
         checkDataTopic()
     }
+    
+    @IBAction func myUnwindAction(unwindSegue:UIStoryboardSegue)
+       {
+           
+       }
+    
+    func showDate()
+       {
+           let todayDate = Date()
+           dateFormat1.dateFormat = "dd/MM/yy"
+           let dateString = dateFormat1.string(from: todayDate)
+           
+           dateLabel.text = dateString
+       }
     
     func checkDataTopic() {
         guard let appDel = UIApplication.shared.delegate as? AppDelegate else { return }

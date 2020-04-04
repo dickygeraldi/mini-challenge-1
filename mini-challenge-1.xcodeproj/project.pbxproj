@@ -14,6 +14,7 @@
 		42992A602436F020006ADF8D /* mini_challenge_1.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 42992A5E2436F020006ADF8D /* mini_challenge_1.xcdatamodeld */; };
 		42992A622436F020006ADF8D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 42992A612436F020006ADF8D /* Assets.xcassets */; };
 		42992A652436F020006ADF8D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 42992A632436F020006ADF8D /* LaunchScreen.storyboard */; };
+		8D353F742438889600E790DC /* ReportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D353F732438889600E790DC /* ReportViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +27,7 @@
 		42992A612436F020006ADF8D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		42992A642436F020006ADF8D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		42992A662436F020006ADF8D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		8D353F732438889600E790DC /* ReportViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,6 +64,7 @@
 				42992A572436F020006ADF8D /* SceneDelegate.swift */,
 				42992A592436F020006ADF8D /* ViewController.swift */,
 				42992A5B2436F020006ADF8D /* Main.storyboard */,
+				8D353F732438889600E790DC /* ReportViewController.swift */,
 				42992A612436F020006ADF8D /* Assets.xcassets */,
 				42992A632436F020006ADF8D /* LaunchScreen.storyboard */,
 				42992A662436F020006ADF8D /* Info.plist */,
@@ -144,6 +147,7 @@
 				42992A602436F020006ADF8D /* mini_challenge_1.xcdatamodeld in Sources */,
 				42992A5A2436F020006ADF8D /* ViewController.swift in Sources */,
 				42992A562436F020006ADF8D /* AppDelegate.swift in Sources */,
+				8D353F742438889600E790DC /* ReportViewController.swift in Sources */,
 				42992A582436F020006ADF8D /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
