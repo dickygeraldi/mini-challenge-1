@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4226DD79243A402F003AE8CD /* Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4226DD78243A402F003AE8CD /* Helper.swift */; };
+		4226DD7B243A403D003AE8CD /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4226DD7A243A403D003AE8CD /* Models.swift */; };
 		42992A562436F020006ADF8D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42992A552436F020006ADF8D /* AppDelegate.swift */; };
 		42992A582436F020006ADF8D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42992A572436F020006ADF8D /* SceneDelegate.swift */; };
 		42992A5A2436F020006ADF8D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42992A592436F020006ADF8D /* ViewController.swift */; };
@@ -18,6 +20,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4226DD78243A402F003AE8CD /* Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helper.swift; sourceTree = "<group>"; };
+		4226DD7A243A403D003AE8CD /* Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
 		42992A522436F020006ADF8D /* mini-challenge-1.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "mini-challenge-1.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		42992A552436F020006ADF8D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		42992A572436F020006ADF8D /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -41,6 +45,40 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4226DD74243A3FF9003AE8CD /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				4226DD7A243A403D003AE8CD /* Models.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		4226DD75243A4007003AE8CD /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				42992A592436F020006ADF8D /* ViewController.swift */,
+				8D353F732438889600E790DC /* ReportViewController.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		4226DD76243A400E003AE8CD /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				42992A5B2436F020006ADF8D /* Main.storyboard */,
+				42992A632436F020006ADF8D /* LaunchScreen.storyboard */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		4226DD77243A401A003AE8CD /* Helper */ = {
+			isa = PBXGroup;
+			children = (
+				4226DD78243A402F003AE8CD /* Helper.swift */,
+			);
+			path = Helper;
+			sourceTree = "<group>";
+		};
 		42992A492436F020006ADF8D = {
 			isa = PBXGroup;
 			children = (
@@ -60,13 +98,13 @@
 		42992A542436F020006ADF8D /* mini-challenge-1 */ = {
 			isa = PBXGroup;
 			children = (
+				4226DD77243A401A003AE8CD /* Helper */,
+				4226DD76243A400E003AE8CD /* Views */,
+				4226DD75243A4007003AE8CD /* Controllers */,
+				4226DD74243A3FF9003AE8CD /* Models */,
 				42992A552436F020006ADF8D /* AppDelegate.swift */,
 				42992A572436F020006ADF8D /* SceneDelegate.swift */,
-				42992A592436F020006ADF8D /* ViewController.swift */,
-				42992A5B2436F020006ADF8D /* Main.storyboard */,
-				8D353F732438889600E790DC /* ReportViewController.swift */,
 				42992A612436F020006ADF8D /* Assets.xcassets */,
-				42992A632436F020006ADF8D /* LaunchScreen.storyboard */,
 				42992A662436F020006ADF8D /* Info.plist */,
 				42992A5E2436F020006ADF8D /* mini_challenge_1.xcdatamodeld */,
 			);
@@ -149,6 +187,8 @@
 				42992A562436F020006ADF8D /* AppDelegate.swift in Sources */,
 				8D353F742438889600E790DC /* ReportViewController.swift in Sources */,
 				42992A582436F020006ADF8D /* SceneDelegate.swift in Sources */,
+				4226DD79243A402F003AE8CD /* Helper.swift in Sources */,
+				4226DD7B243A403D003AE8CD /* Models.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

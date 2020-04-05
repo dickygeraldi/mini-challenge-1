@@ -56,30 +56,7 @@ class ViewController: UIViewController {
         
     }
 
-func storeGoalData()
-       {
-        //memasukkan data ke table goal
-           guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
-
-           let context = appDelegate.persistentContainer.viewContext
-           
-           let messageEntity = NSEntityDescription.entity(forEntityName: "Goal", in: context)!
-           
-           let listMessage = NSManagedObject(entity: messageEntity, insertInto: context)
-           
-           listMessage.setValue("G001", forKey: "id")
-           listMessage.setValue("Do Homework", forKey: "goalName")
-           listMessage.setValue("05/04/2020", forKey: "date") //masih belum bisa simpen nilai dari tanggal sekarang(variable dateString),saat dimasukin, gtw kenapa masih eror. padahal udah bisa ngambil data secara otomatis buat sekarang
-           listMessage.setValue(1, forKey: "status")
-           
-           do {
-               try context.save()
-               print("Success save data")
-           } catch let error as NSError
-           {
-               print("Gagal save context \(error), \(error.userInfo)")
-           }
-       }
+    
     
     func checkDataTopic() {
         guard let appDel = UIApplication.shared.delegate as? AppDelegate else { return }
@@ -126,29 +103,6 @@ func checkGoalData() {
        }
     print("Total number of row : \(countingRow)")
    }
-    
-    func storeDataMessage() {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
-
-        let context = appDelegate.persistentContainer.viewContext
-        
-        let messageEntity = NSEntityDescription.entity(forEntityName: "Task", in: context)!
-        
-        let listMessage = NSManagedObject(entity: messageEntity, insertInto: context)
-        
-        listMessage.setValue("id", forKey: "id")
-        listMessage.setValue("GoalsId", forKey: "goalId")
-        listMessage.setValue("taskName", forKey: "taskName")
-        listMessage.setValue("start", forKey: "start")
-        listMessage.setValue(60, forKey: "duration")
-        listMessage.setValue(60, forKey: "distraction")
-        listMessage.setValue(true, forKey: "status")
-        
-        do {
-            try context.save()
-        } catch let error as NSError {
-            print("Gagal save context \(error), \(error.userInfo)")
-        }
         
        
 }
