@@ -17,6 +17,10 @@
 		42992A622436F020006ADF8D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 42992A612436F020006ADF8D /* Assets.xcassets */; };
 		42992A652436F020006ADF8D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 42992A632436F020006ADF8D /* LaunchScreen.storyboard */; };
 		8D353F742438889600E790DC /* ReportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D353F732438889600E790DC /* ReportViewController.swift */; };
+		D8D7281A243B0BC000EB3177 /* GoalCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8D72818243B0BC000EB3177 /* GoalCollectionViewCell.swift */; };
+		D8D7281B243B0BC000EB3177 /* GoalCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D8D72819243B0BC000EB3177 /* GoalCollectionViewCell.xib */; };
+		D8D7281E243B0CF800EB3177 /* NewGoalCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8D7281C243B0CF800EB3177 /* NewGoalCollectionViewCell.swift */; };
+		D8D7281F243B0CF800EB3177 /* NewGoalCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D8D7281D243B0CF800EB3177 /* NewGoalCollectionViewCell.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +36,10 @@
 		42992A642436F020006ADF8D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		42992A662436F020006ADF8D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8D353F732438889600E790DC /* ReportViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportViewController.swift; sourceTree = "<group>"; };
+		D8D72818243B0BC000EB3177 /* GoalCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalCollectionViewCell.swift; sourceTree = "<group>"; };
+		D8D72819243B0BC000EB3177 /* GoalCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GoalCollectionViewCell.xib; sourceTree = "<group>"; };
+		D8D7281C243B0CF800EB3177 /* NewGoalCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewGoalCollectionViewCell.swift; sourceTree = "<group>"; };
+		D8D7281D243B0CF800EB3177 /* NewGoalCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NewGoalCollectionViewCell.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,6 +74,10 @@
 			isa = PBXGroup;
 			children = (
 				42992A5B2436F020006ADF8D /* Main.storyboard */,
+				D8D72818243B0BC000EB3177 /* GoalCollectionViewCell.swift */,
+				D8D72819243B0BC000EB3177 /* GoalCollectionViewCell.xib */,
+				D8D7281C243B0CF800EB3177 /* NewGoalCollectionViewCell.swift */,
+				D8D7281D243B0CF800EB3177 /* NewGoalCollectionViewCell.xib */,
 				42992A632436F020006ADF8D /* LaunchScreen.storyboard */,
 			);
 			path = Views;
@@ -169,7 +181,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D8D7281F243B0CF800EB3177 /* NewGoalCollectionViewCell.xib in Resources */,
 				42992A652436F020006ADF8D /* LaunchScreen.storyboard in Resources */,
+				D8D7281B243B0BC000EB3177 /* GoalCollectionViewCell.xib in Resources */,
 				42992A622436F020006ADF8D /* Assets.xcassets in Resources */,
 				42992A5D2436F020006ADF8D /* Main.storyboard in Resources */,
 			);
@@ -183,8 +197,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				42992A602436F020006ADF8D /* mini_challenge_1.xcdatamodeld in Sources */,
+				D8D7281A243B0BC000EB3177 /* GoalCollectionViewCell.swift in Sources */,
 				42992A5A2436F020006ADF8D /* ViewController.swift in Sources */,
 				42992A562436F020006ADF8D /* AppDelegate.swift in Sources */,
+				D8D7281E243B0CF800EB3177 /* NewGoalCollectionViewCell.swift in Sources */,
 				8D353F742438889600E790DC /* ReportViewController.swift in Sources */,
 				42992A582436F020006ADF8D /* SceneDelegate.swift in Sources */,
 				4226DD79243A402F003AE8CD /* Helper.swift in Sources */,
