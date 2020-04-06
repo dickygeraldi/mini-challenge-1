@@ -23,6 +23,7 @@ class ReportViewController: UIViewController {
     var countingTaskRow : Int = 0
     var countingDuration : Int = 0
     var countingTaskDistracted : Int = 0
+    var tempDate2 = "" //untuk mengambil data dari format dateString
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -54,12 +55,18 @@ class ReportViewController: UIViewController {
         do {
             let result = try context.fetch(fetch)
             for data in result as! [NSManagedObject] {
-             countingRow = countingRow + 1
+            
              print("Goal table row \(countingRow)")
              print(data.value(forKey: "id") as! String)
              print(data.value(forKey: "goalName") as! String)
              print(data.value(forKey: "date") as! String)
              print(data.value(forKey: "status") as! boolean_t)
+                
+                // jadi untuk goal yang kehitung tu yang hanya hari ini aja
+                if(data.value(forKey: "date") as! String == tempDate2)
+                {
+                    countingRow = countingRow + 1
+                }
             }
         } catch {
             print("Failed")

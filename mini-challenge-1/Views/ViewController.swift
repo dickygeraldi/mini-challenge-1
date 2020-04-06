@@ -28,6 +28,7 @@ class ViewController: UIViewController {
         self.navigationController?.isNavigationBarHidden = true //untuk hilangin navigation bar
         showDate()//untuk set dateLabel jadi tanggal hari ini
         
+        //storeDataToGoal(entity: "Goal") hanya untuk cek
         checkGoalData()
         
         // Collection View related things - Michael
@@ -55,11 +56,42 @@ class ViewController: UIViewController {
         if let destination = segue.destination as? ReportViewController
         {
             destination.tempDate = dateString2
+            destination.tempDate2 = dateString
             
             
         }
     }
     
+    
+    func storeDataToGoal(entity: String) {
+
+           guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+
+           let context = appDelegate.persistentContainer.viewContext
+
+           let dataOfEntity = NSEntityDescription.entity(forEntityName: entity, in: context)!
+
+           let listOfEntity = NSManagedObject(entity: dataOfEntity, insertInto: context)
+
+           if entity == "Goal" {
+               
+               listOfEntity.setValue("2", forKey: "id")
+               listOfEntity.setValue("Wireframe", forKey: "goalName")
+               listOfEntity.setValue("\(dateString)", forKey: "date")
+               listOfEntity.setValue(0, forKey: "status")
+           } 
+
+           do {
+               
+              try context.save()
+              print("Success save data")
+           
+           } catch let error as NSError {
+              
+               print("Gagal save context \(error), \(error.userInfo)")
+           
+           }
+       }
     
     
     
