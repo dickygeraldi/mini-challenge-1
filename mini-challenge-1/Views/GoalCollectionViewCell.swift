@@ -20,6 +20,7 @@ class GoalCollectionViewCell: UICollectionViewCell {
     }
 
     @IBAction func editGoal(_ sender: Any) {
+        print("test")
         
     }
 }
