@@ -9,7 +9,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="GK2-0U-kJA" customClass="GoalCollectionViewCell" customModule="mini_challenge_1" customModuleProvider="target">
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="goalCollectionViewCell" id="GK2-0U-kJA" customClass="GoalCollectionViewCell" customModule="mini_challenge_1" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="103" height="103"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="9DE-O0-vGN" customClass="GoalCollectionViewCell" customModule="mini_challenge_1" customModuleProvider="target">
@@ -35,7 +35,7 @@
             </collectionViewCellContentView>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <connections>
-                <outlet property="cellView" destination="9DE-O0-vGN" id="UmM-gQ-n93"/>
+                <outlet property="cellView" destination="9DE-O0-vGN" id="WjL-fM-PtM"/>
             </connections>
             <point key="canvasLocation" x="180" y="58"/>
         </collectionViewCell>

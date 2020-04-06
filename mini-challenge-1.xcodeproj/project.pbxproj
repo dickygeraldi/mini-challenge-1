@@ -64,8 +64,6 @@
 		4226DD75243A4007003AE8CD /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				42992A592436F020006ADF8D /* ViewController.swift */,
-				8D353F732438889600E790DC /* ReportViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -74,11 +72,13 @@
 			isa = PBXGroup;
 			children = (
 				42992A5B2436F020006ADF8D /* Main.storyboard */,
-				D8D72818243B0BC000EB3177 /* GoalCollectionViewCell.swift */,
+				42992A592436F020006ADF8D /* ViewController.swift */,
 				D8D72819243B0BC000EB3177 /* GoalCollectionViewCell.xib */,
-				D8D7281C243B0CF800EB3177 /* NewGoalCollectionViewCell.swift */,
+				D8D72818243B0BC000EB3177 /* GoalCollectionViewCell.swift */,
 				D8D7281D243B0CF800EB3177 /* NewGoalCollectionViewCell.xib */,
+				D8D7281C243B0CF800EB3177 /* NewGoalCollectionViewCell.swift */,
 				42992A632436F020006ADF8D /* LaunchScreen.storyboard */,
+				8D353F732438889600E790DC /* ReportViewController.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
