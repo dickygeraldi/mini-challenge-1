@@ -278,7 +278,7 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource{
     
     // function to find the total number of goals for today
     func findNumberOfGoalsToday() -> Int {
-        
+    
         
         guard let appDel = UIApplication.shared.delegate as? AppDelegate else { return 0 }
         let context = appDel.persistentContainer.viewContext
@@ -351,7 +351,7 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource{
         let goalsArray = retrieveTodayGoalData()
         var currentGoal: goalStruct?
         currentGoal = nil
-        if (!goalsArray.isEmpty){
+        if (!goalsArray.isEmpty && indexPath.row < addFlag){
             currentGoal = goalsArray[indexPath.row]
         }
         
