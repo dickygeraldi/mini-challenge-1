@@ -169,8 +169,7 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource{
         if (numberOfGoalsForToday > 3){
             numberOfGoalsForToday = 3
         }
-        
-        
+        print(numberOfGoalsForToday)
         return numberOfGoalsForToday
     }
     
@@ -189,34 +188,30 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource{
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-//        return 3
-        // the number of cells will be number of goals for today and an extra to create a new one if there is still space
-        if canAddGoal(){
-            return findNumberOfGoalsToday() + 1
-        }
-        // if no more goals can be added today
-        return findNumberOfGoalsToday()
-        
+        return 3
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         // for each goals a cell will be created with template GoalCollectionViewCell
         // for the add goals, a cell will be created with template NewGoalCollectionViewCell
-//        let numberOfGoals = 2
-//        let canAddGoals = true
-        let numberOfGoals = findNumberOfGoalsToday()
-        let canAddGoals = canAddGoal()
         
-        if canAddGoals{
-            if (indexPath.row == numberOfGoals){
-                let cell2 = collectionView.dequeueReusableCell(withReuseIdentifier: "newGoalCollectionViewCell", for: indexPath) as! NewGoalCollectionViewCell
-                cell2.layer.cornerRadius = 8
-                return cell2
-            }
+        // index at where the add cell is used
+        let addFlag = findNumberOfGoalsToday()
+        
+        // before addFlag returns the goal cell
+        if(indexPath.row < addFlag ){
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "goalCollectionViewCell", for: indexPath) as! GoalCollectionViewCell
+            cell.layer.cornerRadius = 8
+            print("cell 1")
+            return cell
+        } // after addFlag returns the add cell
+        else{ // which is - if(indexPath.row >= addFlag)
+            let cell2 = collectionView.dequeueReusableCell(withReuseIdentifier: "newGoalCollectionViewCell", for: indexPath) as! NewGoalCollectionViewCell
+            cell2.layer.cornerRadius = 8
+            print("Cell 2")
+            return cell2
         }
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "goalCollectionViewCell", for: indexPath) as! GoalCollectionViewCell
-        cell.layer.cornerRadius = 8
-        return cell
+        
     }
     
     

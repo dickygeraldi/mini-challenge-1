@@ -26,7 +26,7 @@
             <connections>
                 <outlet property="cellView" destination="abW-ym-rvL" id="88Z-hs-2Sq"/>
             </connections>
-            <point key="canvasLocation" x="50" y="36"/>
+            <point key="canvasLocation" x="286" y="63"/>
         </collectionViewCell>
     </objects>
     <resources>
