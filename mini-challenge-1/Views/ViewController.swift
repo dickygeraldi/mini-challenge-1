@@ -28,8 +28,20 @@ class ViewController: UIViewController {
         self.navigationController?.isNavigationBarHidden = true //untuk hilangin navigation bar
         showDate()//untuk set dateLabel jadi tanggal hari ini
         
-        //storeDataToGoal(entity: "Goal") hanya untuk cek
+        
+        
+       /* data dummy
+         storeDataToGoal(entity: "Goal", id: "1", name: "Mini challenge 1", date: dateString, status: false)
+        storeDataToGoal(entity: "Goal", id: "2", name: "Mini challenge 2", date: dateString, status: true)
+        
+        storeDataToTask(entity: "Task", id: "1", goalId: "1", taskName: "Wireframe", start: "13:00", duration: 60, distraction: 8, status: true)
+       storeDataToTask(entity: "Task", id: "2", goalId: "1", taskName: "Mockup", start: "14:00", duration: 60, distraction: 2, status: false)
+       storeDataToTask(entity: "Task", id: "3", goalId: "1", taskName: "Prototype", start: "15:00", duration: 120, distraction: 1, status: true)
+       storeDataToTask(entity: "Task", id: "4", goalId: "2", taskName: "Develop", start: "17:00", duration: 40, distraction: 3, status: true)
+       */
+        
         checkGoalData()
+        checkTaskData()
         
         // Collection View related things - Michael
         setupCollectionViewCell()
@@ -63,7 +75,7 @@ class ViewController: UIViewController {
     }
     
     
-    func storeDataToGoal(entity: String) {
+    func storeDataToGoal(entity: String , id: String, name: String, date: String, status: BooleanLiteralType) {
 
            guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
 
@@ -75,10 +87,10 @@ class ViewController: UIViewController {
 
            if entity == "Goal" {
                
-               listOfEntity.setValue("2", forKey: "id")
-               listOfEntity.setValue("Wireframe", forKey: "goalName")
-               listOfEntity.setValue("\(dateString)", forKey: "date")
-               listOfEntity.setValue(0, forKey: "status")
+               listOfEntity.setValue(id, forKey: "id")
+               listOfEntity.setValue(name, forKey: "goalName")
+               listOfEntity.setValue(dateString, forKey: "date")
+               listOfEntity.setValue(status, forKey: "status")
            } 
 
            do {
@@ -92,6 +104,40 @@ class ViewController: UIViewController {
            
            }
        }
+    
+    func storeDataToTask(entity: String, id: String, goalId: String, taskName:String, start:String, duration: Int, distraction: Int, status: BooleanLiteralType) {
+
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+
+        let context = appDelegate.persistentContainer.viewContext
+
+        let dataOfEntity = NSEntityDescription.entity(forEntityName: entity, in: context)!
+
+        let listOfEntity = NSManagedObject(entity: dataOfEntity, insertInto: context)
+
+         if entity == "Task" {
+            
+            listOfEntity.setValue(id, forKey: "id")
+            listOfEntity.setValue(goalId, forKey: "goalId")
+            listOfEntity.setValue(taskName, forKey: "taskName")
+            listOfEntity.setValue(start, forKey: "start")
+            listOfEntity.setValue(duration, forKey: "duration")
+            listOfEntity.setValue(distraction, forKey: "distraction")
+            listOfEntity.setValue(status, forKey: "status")
+        
+        }
+
+        do {
+            
+           try context.save()
+           print("Success save data")
+        
+        } catch let error as NSError {
+           
+            print("Gagal save context \(error), \(error.userInfo)")
+        
+        }
+    }
     
     
     
@@ -131,16 +177,82 @@ class ViewController: UIViewController {
             for data in result as! [NSManagedObject] {
                 countingRow = countingRow + 1
                 print("Goal table row \(countingRow)")
-                print(data.value(forKey: "id") as! String)
-                print(data.value(forKey: "goalName") as! String)
-                print(data.value(forKey: "date") as! String)
-                print(data.value(forKey: "status") as! boolean_t)
+                print("Id = \(data.value(forKey: "id"))")
+                print("name = \( data.value(forKey: "goalName"))")
+                print("date = \(data.value(forKey: "date"))")
+                print(data.value(forKey: "status"))
             }
         } catch {
             print("Failed")
         }
-        print("Total number of row : \(countingRow)")
+        print("Total number of row in goals: \(countingRow)")
     }
+    
+    func checkTaskData() {
+        guard let appDel = UIApplication.shared.delegate as? AppDelegate else { return }
+        let context = appDel.persistentContainer.viewContext
+        
+        let fetch = NSFetchRequest<NSFetchRequestResult>(entityName: "Task")
+        var countingRow : Int = 0
+        
+        do {
+            let result = try context.fetch(fetch)
+            for data in result as! [NSManagedObject] {
+                countingRow = countingRow + 1
+                print("Task table row \(countingRow)")
+                print("Id = \(data.value(forKey: "id"))")
+                print("goalid = \( data.value(forKey: "goalId"))")
+                print("task name= \(data.value(forKey: "taskName"))")
+                print(" start = \(data.value(forKey: "start"))")
+                 print(" duration = \(data.value(forKey: "duration"))")
+                 print(" distraction = \(data.value(forKey: "distraction"))")
+                 print((data.value(forKey: "status") as! BooleanLiteralType))
+            }
+        } catch {
+            print("Failed")
+        }
+        print("Total number of row in goals: \(countingRow)")
+    }
+    
+    
+    
+    func deleteGoalData(entity: String, uniqueId: String) {
+         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+         
+         let managedContext = appDelegate.persistentContainer.viewContext
+         
+         let fetchRequest:NSFetchRequest<NSFetchRequestResult> = NSFetchRequest.init(entityName: entity)
+         fetchRequest.predicate = NSPredicate(format: "id = %@", uniqueId)
+         
+         do{
+             let dataToDelete = try managedContext.fetch(fetchRequest)[0] as! NSManagedObject
+             managedContext.delete(dataToDelete)
+             
+             try managedContext.save()
+         }catch let err{
+             print(err)
+         }
+     }
+    
+    func deleteTaskData(entity: String, uniqueId: String) {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+        
+        let managedContext = appDelegate.persistentContainer.viewContext
+        
+        let fetchRequest:NSFetchRequest<NSFetchRequestResult> = NSFetchRequest.init(entityName: entity)
+        fetchRequest.predicate = NSPredicate(format: "id = %@", uniqueId)
+        
+        do{
+            let dataToDelete = try managedContext.fetch(fetchRequest)[0] as! NSManagedObject
+            managedContext.delete(dataToDelete)
+            
+            try managedContext.save()
+        }catch let err{
+            print(err)
+        }
+    }
+    
+     
     
     
    
