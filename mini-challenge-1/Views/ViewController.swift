@@ -264,7 +264,12 @@ class ViewController: UIViewController {
 // Michael - Collection View is extended here
 extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource{
     
-    
+    struct goalStruct {
+        var goalId: String
+        var goalName: String
+        var goalDate: String
+        var goalStatus: Any
+    }
     // to register the nib files of collection cells
     func setupCollectionViewCell(){
         collectionView.register(UINib(nibName: "GoalCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "goalCollectionViewCell")
@@ -273,6 +278,8 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource{
     
     // function to find the total number of goals for today
     func findNumberOfGoalsToday() -> Int {
+        
+        
         guard let appDel = UIApplication.shared.delegate as? AppDelegate else { return 0 }
         let context = appDel.persistentContainer.viewContext
         
@@ -286,7 +293,7 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource{
         let todayDate = Date()
         dateFormat1.dateFormat = "dd/MM/yy"
         dateString = dateFormat1.string(from: todayDate)
-        
+        print(dateString)
         
         do {
             let result = try context.fetch(fetch)
@@ -300,7 +307,7 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource{
                 let dataDate = (data.value(forKey: "date") as! String)
                 
                 // compare the retrieved data with today's date
-                if (dataDate == ""){
+                if (dataDate == dateString){
                     numberOfGoalsForToday += 1
                 }
             }
@@ -341,11 +348,18 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource{
         
         // index at where the add cell is used
         let addFlag = findNumberOfGoalsToday()
+        let goalsArray = retrieveTodayGoalData()
+        var currentGoal: goalStruct?
+        currentGoal = nil
+        if (!goalsArray.isEmpty){
+            currentGoal = goalsArray[indexPath.row]
+        }
         
         // before addFlag returns the goal cell
         if(indexPath.row < addFlag ){
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "goalCollectionViewCell", for: indexPath) as! GoalCollectionViewCell
             cell.layer.cornerRadius = 8
+            cell.goalLabel.text = currentGoal!.goalName
             print("cell 1")
             return cell
         } // after addFlag returns the add cell
@@ -358,6 +372,71 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource{
         
     }
     
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+        // index at where the add cell is used
+        let addFlag = findNumberOfGoalsToday()
+        
+        // if selected a goal cell
+        if(indexPath.row < addFlag){
+            
+        }
+        // if selected an add goal cell
+        else{
+            self.performSegue(withIdentifier: "newGoalSegue", sender: self)
+        }
+    }
+    
+    // returns an array of today's goals
+    func retrieveTodayGoalData() -> [goalStruct] {
+        var goalsArray: [goalStruct]
+        goalsArray = []
+        
+        guard let appDel = UIApplication.shared.delegate as? AppDelegate else { return [] }
+        let context = appDel.persistentContainer.viewContext
+        
+        let fetch = NSFetchRequest<NSFetchRequestResult>(entityName: "Goal")
+        var countingRow : Int = 0
+        
+        let todayDate = Date()
+        dateFormat1.dateFormat = "dd/MM/yy"
+        dateString = dateFormat1.string(from: todayDate)
+        print(dateString)
+        
+        do {
+            let result = try context.fetch(fetch)
+            for data in result as! [NSManagedObject] {
+                let currentDate = "\(data.value(forKey: "date")!)"
+                if (currentDate == dateString){ // if data is goal for today's date
+                    // put in a temporary goalStruct
+                    let tempGoal = goalStruct(
+                        goalId: "\(data.value(forKey: "id")!)",
+                        goalName: "\( data.value(forKey: "goalName")!)",
+                        goalDate: "\(data.value(forKey: "date")!)",
+                        goalStatus: data.value(forKey: "status")!)
+                    
+                    // append the goalStruct to the array
+                    goalsArray.append(tempGoal)
+                }
+                
+                
+                
+                countingRow = countingRow + 1
+                print("Goal table row \(countingRow)")
+                print("Id = \(data.value(forKey: "id"))")
+                print("name = \( data.value(forKey: "goalName"))")
+                print("date = \(data.value(forKey: "date"))")
+                print(data.value(forKey: "status"))
+                
+                
+                
+            }
+        } catch {
+            print("Failed")
+        }
+        print("Total number of row in goals: \(countingRow)")
+        return goalsArray
+    }
     
 }
 

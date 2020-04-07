@@ -36,6 +36,7 @@
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <connections>
                 <outlet property="cellView" destination="9DE-O0-vGN" id="WjL-fM-PtM"/>
+                <outlet property="goalLabel" destination="jZd-XV-NFq" id="ffj-Vz-xce"/>
             </connections>
             <point key="canvasLocation" x="180" y="58"/>
         </collectionViewCell>

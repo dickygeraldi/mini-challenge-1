@@ -11,6 +11,7 @@ import UIKit
 class GoalCollectionViewCell: UICollectionViewCell {
 
     @IBOutlet weak var cellView: GoalCollectionViewCell!
+    @IBOutlet weak var goalLabel: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()

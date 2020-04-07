@@ -17,6 +17,7 @@
 		42992A622436F020006ADF8D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 42992A612436F020006ADF8D /* Assets.xcassets */; };
 		42992A652436F020006ADF8D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 42992A632436F020006ADF8D /* LaunchScreen.storyboard */; };
 		8D353F742438889600E790DC /* ReportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D353F732438889600E790DC /* ReportViewController.swift */; };
+		D8806DE7243C91F80041A2E7 /* NewGoalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8806DE6243C91F80041A2E7 /* NewGoalViewController.swift */; };
 		D8D7281A243B0BC000EB3177 /* GoalCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8D72818243B0BC000EB3177 /* GoalCollectionViewCell.swift */; };
 		D8D7281B243B0BC000EB3177 /* GoalCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D8D72819243B0BC000EB3177 /* GoalCollectionViewCell.xib */; };
 		D8D7281E243B0CF800EB3177 /* NewGoalCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8D7281C243B0CF800EB3177 /* NewGoalCollectionViewCell.swift */; };
@@ -36,6 +37,7 @@
 		42992A642436F020006ADF8D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		42992A662436F020006ADF8D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8D353F732438889600E790DC /* ReportViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportViewController.swift; sourceTree = "<group>"; };
+		D8806DE6243C91F80041A2E7 /* NewGoalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewGoalViewController.swift; sourceTree = "<group>"; };
 		D8D72818243B0BC000EB3177 /* GoalCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalCollectionViewCell.swift; sourceTree = "<group>"; };
 		D8D72819243B0BC000EB3177 /* GoalCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GoalCollectionViewCell.xib; sourceTree = "<group>"; };
 		D8D7281C243B0CF800EB3177 /* NewGoalCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewGoalCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -72,6 +74,7 @@
 			isa = PBXGroup;
 			children = (
 				42992A5B2436F020006ADF8D /* Main.storyboard */,
+				D8806DE6243C91F80041A2E7 /* NewGoalViewController.swift */,
 				42992A592436F020006ADF8D /* ViewController.swift */,
 				D8D72819243B0BC000EB3177 /* GoalCollectionViewCell.xib */,
 				D8D72818243B0BC000EB3177 /* GoalCollectionViewCell.swift */,
@@ -200,6 +203,7 @@
 				D8D7281A243B0BC000EB3177 /* GoalCollectionViewCell.swift in Sources */,
 				42992A5A2436F020006ADF8D /* ViewController.swift in Sources */,
 				42992A562436F020006ADF8D /* AppDelegate.swift in Sources */,
+				D8806DE7243C91F80041A2E7 /* NewGoalViewController.swift in Sources */,
 				D8D7281E243B0CF800EB3177 /* NewGoalCollectionViewCell.swift in Sources */,
 				8D353F742438889600E790DC /* ReportViewController.swift in Sources */,
 				42992A582436F020006ADF8D /* SceneDelegate.swift in Sources */,
