@@ -625,10 +625,10 @@ How could you improve tomorrow? (160 words)</string>
             </objects>
             <point key="canvasLocation" x="2149" y="1000"/>
         </scene>
-        <!--Add Task View Controllers View Controller-->
+        <!--Add Task View Controllers-->
         <scene sceneID="klK-BQ-Pvy">
             <objects>
-                <viewController id="yaq-bO-E46" customClass="AddTaskViewControllersViewController" customModule="mini_challenge_1" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="yaq-bO-E46" customClass="AddTaskViewControllers" customModule="mini_challenge_1" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="xr7-Nq-kcr">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -638,7 +638,11 @@ How could you improve tomorrow? (160 words)</string>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                 <items>
                                     <navigationItem title="Title" id="dZI-zw-sSX">
-                                        <barButtonItem key="rightBarButtonItem" title="Save" id="RvB-Ud-b3B"/>
+                                        <barButtonItem key="rightBarButtonItem" title="Save" id="RvB-Ud-b3B">
+                                            <connections>
+                                                <action selector="saveButton:" destination="yaq-bO-E46" id="POe-Aq-o3X"/>
+                                            </connections>
+                                        </barButtonItem>
                                     </navigationItem>
                                 </items>
                             </navigationBar>
@@ -694,7 +698,6 @@ How could you improve tomorrow? (160 words)</string>
                     <connections>
                         <outlet property="durationToFinishTask" destination="ZGF-AK-0K4" id="O8d-JO-5tF"/>
                         <outlet property="nameOfGoals" destination="26T-Ve-wHA" id="jYL-20-auN"/>
-                        <outlet property="saveButton" destination="RvB-Ud-b3B" id="fdc-4C-XQJ"/>
                         <outlet property="startTime" destination="Qes-PR-snx" id="voz-TX-xQ7"/>
                         <outlet property="taskNameInput" destination="RDU-ah-OhP" id="fbW-14-bQl"/>
                     </connections>
