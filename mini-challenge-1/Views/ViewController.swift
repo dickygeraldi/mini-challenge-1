@@ -22,6 +22,8 @@ class ViewController: UIViewController {
     var dateString2 : String = "" //untuk format date yang beda di halaman Report
     let dateFormat2: DateFormatter = DateFormatter ()
     
+    var goalIdArray : [String] = []
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
@@ -42,8 +44,9 @@ class ViewController: UIViewController {
        storeDataToTask(entity: "Task", id: "4", goalId: "2", taskName: "Develop", start: "17:00", duration: 40, distraction: 3, status: true)
        */
         
-        checkGoalData()
-        checkTaskData()
+        //checkGoalData()
+        //checkTaskData()
+        
         
         // Collection View related things - Michael
         setupCollectionViewCell()
@@ -177,6 +180,9 @@ class ViewController: UIViewController {
         do {
             let result = try context.fetch(fetch)
             for data in result as! [NSManagedObject] {
+                goalIdArray.append(data.value(forKey: "id") as! String)
+                print("goal id array : \(goalIdArray)")
+                
                 countingRow = countingRow + 1
                 print("Goal table row \(countingRow)")
                 print("Id = \(data.value(forKey: "id"))")

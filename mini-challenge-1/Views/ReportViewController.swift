@@ -21,16 +21,14 @@ class ReportViewController: UIViewController {
     var countingRow : Int = 0
     var tempDate = ""
     var countingTaskRow : Int = 0
-    //var countingDuration : Int = 0
-    var countingTaskDistracted : Int = 0
     var tempDate2 = "" //untuk mengambil data dari format dateString
     
-    
-    var countingTaskCompleted : Int = 0
     var countingGoalRow = 0
     var goalFlag = 1
     var countingDuration = 0
     var countingDistracted = 0
+    
+    var goalIdArray : [String] = []
     
     
     override func viewDidLoad() {
@@ -39,106 +37,34 @@ class ReportViewController: UIViewController {
         // Do any additional setup after loading the view.
         
         //method buat ambil data dari coredata
-        //checkGoalData()
-        //checkTaskData()
-        
-        checkAllReportData()
+        checkGoalData()
+        checkTaskData()
         
         //set label yang ada di UI
         totalGoalsCompletedLabel.text = "\(countingGoalRow)"
-        totalTaskCompletedLabel.text = "\(countingTaskCompleted)"
+        totalTaskCompletedLabel.text = "\(countingTaskRow)"
         totalProductiveMinsLabel.text = "\(countingDuration)"
-        totalTimesDistractedLabel.text = "\(countingTaskDistracted)"
+        totalTimesDistractedLabel.text = "\(countingDistracted)"
         
         dateLabel.text = tempDate
         
         self.navigationController?.isNavigationBarHidden = true //untuk hilangin navigation bar
     }
     
-    func checkAllReportData()
-    {
-        
-        var tempGoalId: String = ""
-        guard let appDel = UIApplication.shared.delegate as? AppDelegate else { return }
-               let context = appDel.persistentContainer.viewContext
-               
-               let fetch = NSFetchRequest<NSFetchRequestResult>(entityName: "Goal")
-               countingRow = 0
-                goalFlag = 1
-        countingTaskCompleted = 0
-        countingDuration = 0
-            
-               do {
-                   let result = try context.fetch(fetch)
-                   for data1 in result as! [NSManagedObject] {
-                       
-                       // jadi untuk goal yang kehitung tu yang hanya hari ini aja
-                       if(data1.value(forKey: "date") as! String == tempDate2)
-                       {
-                            tempGoalId = data1.value(forKey: "id") as! String
-                            print(tempGoalId)
-                            guard let appDel = UIApplication.shared.delegate as? AppDelegate else { return }
-                                      let context = appDel.persistentContainer.viewContext
-                                    let fetch1 = NSFetchRequest<NSFetchRequestResult>(entityName: "Task")
-                                      do {
-                                          let result = try context.fetch(fetch1)
-                                          for data in result as! [NSManagedObject]
-                                          {
-                                            
-                                            if(data.value(forKey: "id")as! String == tempGoalId)
-                                              {
-                                                if(data.value(forKey: "status") as! BooleanLiteralType == false)
-                                                {
-                                                    print("data yang keanggap false : \(data.value(forKey: "taskName")as! String)")
-                                                    goalFlag = 0 //bearti goalnya belum complete
-                                                    updateStatusData(entity: "Goal", uniqueId: tempGoalId, newData: 0)
-                                                }
-                                                else{
-                                                    //hitung task yang ada
-                                                    print("data yang dianggap true: \(data.value(forKey: "taskName")as! String)")
-                                                    countingTaskCompleted += 1
-                                                    countingDuration += data.value(forKey: "duration") as! Int
-                                                    
-                                                }
-                                              }
-                                          }
-                                      } catch
-                                      {
-                                          print("Failed")
-                                      }
-                                  
-                           countingRow = countingRow + 1
-                       }
-                    
-                    if(goalFlag == 1)
-                    {
-                        updateStatusData(entity: "Goal", uniqueId: tempGoalId, newData: 1)
-                        countingGoalRow += 1
-                    }
-                       
-                       /*if(data.value(forKey: "status") as! boolean_t == 0)//==0 artinya false
-                                      {
-                                          print("false goals")
-                                      }*/
-                   }
-               } catch {
-                   print("Failed")
-               }
-            print("Total number of row : \(countingRow)")
-           
-    }
-    
+   
     func checkGoalData() {
         guard let appDel = UIApplication.shared.delegate as? AppDelegate else { return }
         let context = appDel.persistentContainer.viewContext
         
         let fetch = NSFetchRequest<NSFetchRequestResult>(entityName: "Goal")
         countingRow = 0
-     
+        
         do {
             let result = try context.fetch(fetch)
             for data in result as! [NSManagedObject] {
             
+            goalIdArray.append(data.value(forKey: "id") as! String)
+                
              print("Goal table row \(countingRow)")
              print(data.value(forKey: "id") as! String)
              print(data.value(forKey: "goalName") as! String)
@@ -148,12 +74,17 @@ class ReportViewController: UIViewController {
                 // jadi untuk goal yang kehitung tu yang hanya hari ini aja
                 if(data.value(forKey: "date") as! String == tempDate2)
                 {
-                    countingRow = countingRow + 1
+                    print("sddsfasdf")
+                    if(data.value(forKey: "status") as! Bool == true)
+                    {
+                        print("true goal counted")
+                        countingGoalRow = countingGoalRow + 1
+                    }
                 }
                 
-                if(data.value(forKey: "status") as! boolean_t == 0)//==0 artinya false
+                if(data.value(forKey: "status") as! Bool == false)//==0 artinya false
                                {
-                                   print("false goals")
+                                   
                                }
             }
         } catch {
@@ -166,31 +97,56 @@ class ReportViewController: UIViewController {
            guard let appDel = UIApplication.shared.delegate as? AppDelegate else { return }
            let context = appDel.persistentContainer.viewContext
             countingTaskRow = 0 //menghitung jumlah baris yang ada
-            countingTaskDistracted = 0 //menghitung jumlah berapa kali ke distract yang ada
             countingDuration = 0 //menghitung jumlah waktu produktif
+            countingDistracted = 0
+            goalFlag = 1
         
            let fetch = NSFetchRequest<NSFetchRequestResult>(entityName: "Task")
            
            do {
                let result = try context.fetch(fetch)
-               for data in result as! [NSManagedObject] {
-                   countingTaskRow = countingTaskRow + 1
-                   let duration: Int = data.value(forKey: "duration") as! Int
-                  let timesDistracted: Int = data.value(forKey: "distraction") as! Int
-                
-                   countingDuration += duration
-                countingTaskDistracted += timesDistracted
-               }
+               for data in result as! [NSManagedObject]
+               {
+                    for i in 0..<goalIdArray.count {
+                        if(data.value(forKey: "goalId") as! String == goalIdArray[i] && data.value(forKey: "status") as! Bool == true )
+                        {
+                            print("counting task row counted")
+                            
+                            countingTaskRow = countingTaskRow + 1
+                            countingDuration += data.value(forKey: "duration") as! Int
+                            countingDistracted += data.value(forKey: "distraction") as! Int
+                            
+                           
+                        }
+                        else if(data.value(forKey: "goalId") as! String == goalIdArray[i] && data.value(forKey: "status") as! Bool == false)
+                        {
+                            goalFlag = 0
+                        }
+                    }
+                       
+                    
+                  
+                   }
            } catch {
                print("Failed")
            }
            
             print(countingDuration)
             print(countingTaskRow)
-            print(countingTaskDistracted)
+            print(countingDistracted)
+        
        }
     
-    func updateStatusData(entity: String, uniqueId: String, newData: boolean_t) {
+    func changeStatusGoal (goalId : String)
+    {
+        // let int counter = 0
+        // fetch array di tabel Task dimana goalId sesuai parameter
+        //looping di array itu
+        //ketika status = true,increment counter
+        //compare counter sama g dengan panjang array
+    }
+    
+    func updateDateData(entity: String, uniqueId: String, newDate: String) {
            guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
            
            let managedContext = appDelegate.persistentContainer.viewContext
@@ -203,9 +159,9 @@ class ReportViewController: UIViewController {
                let dataToUpdate = fetch[0] as! NSManagedObject
                
                if entity == "Goal" {
-                   dataToUpdate.setValue(newData, forKey: "status")
+                   dataToUpdate.setValue(newDate, forKey: "date")
                } else if entity == "Task" {
-                   dataToUpdate.setValue(newData, forKey: "status")
+                   dataToUpdate.setValue(newDate, forKey: "status")
                }
                
                try managedContext.save()
