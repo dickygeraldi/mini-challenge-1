@@ -161,3 +161,27 @@ class Helper {
         return (tempGoals, tempTask, reportData)
     }
 }
+
+extension UITextField {
+    
+    func setPadding() {
+        let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 48, height: self.frame.height))
+
+        self.leftView = paddingView
+        self.leftViewMode = .always
+    }
+    
+    func setupTextField() {
+        self.layer.borderColor = #colorLiteral(red: 0.6571614146, green: 0.6571771502, blue: 0.6571686864, alpha: 1)
+        self.layer.borderWidth = 1
+        self.layer.cornerRadius = 16
+    }
+}
+
+extension UIButton {
+    func roundCorners(){
+        let radius = self.frame.size.width / 2
+        layer.cornerRadius = radius
+        layer.masksToBounds = true
+    }
+}

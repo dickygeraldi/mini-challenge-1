@@ -9,12 +9,12 @@
 import UIKit
 import CoreData
 
-class ViewController: UIViewController {
-    
-    
+class ViewController: UIViewController  {
     
     @IBOutlet weak var dateLabel: UILabel!
+    @IBOutlet weak var addTaskPerGoals: UIButton!
     
+    @IBOutlet weak var taskTableView: UITableView!
     @IBOutlet weak var collectionView: UICollectionView!
     
     let dateFormat1: DateFormatter = DateFormatter ()
@@ -23,6 +23,8 @@ class ViewController: UIViewController {
     let dateFormat2: DateFormatter = DateFormatter ()
     
     var goalIdArray : [String] = []
+    
+    var taskPerGoals = [String: [Tasks]]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -260,11 +262,14 @@ class ViewController: UIViewController {
         }
     }
     
-     
+//    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+//        return taskPerGoals[
+//    }
+//
+//    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+//        <#code#>
+//    }
     
-    
-   
-
     
     
 }
@@ -358,7 +363,11 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource{
         let addFlag = findNumberOfGoalsToday()
         let goalsArray = retrieveTodayGoalData()
         var currentGoal: goalStruct?
+        
+        print(currentGoal?.goalId)
+        
         currentGoal = nil
+        
         if (!goalsArray.isEmpty && indexPath.row < addFlag){
             currentGoal = goalsArray[indexPath.row]
         }

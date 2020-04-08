@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="3nx-jQ-7MJ">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16086"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -83,6 +83,9 @@
                                         <rect key="frame" x="367" y="437" width="25.5" height="23"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <state key="normal" title="Button" image="Plus Logo"/>
+                                        <connections>
+                                            <segue destination="yaq-bO-E46" kind="presentation" id="x6R-Nz-aVd"/>
+                                        </connections>
                                     </button>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="JhW-3n-Cj5">
                                         <rect key="frame" x="0.0" y="470" width="414" height="426"/>
@@ -129,8 +132,10 @@
                     </view>
                     <navigationItem key="navigationItem" id="aOD-yo-eWp"/>
                     <connections>
+                        <outlet property="addTaskPerGoals" destination="I6g-Wm-FIp" id="Rbf-AR-8Xl"/>
                         <outlet property="collectionView" destination="C3F-3d-kgW" id="EFi-QY-6oA"/>
                         <outlet property="dateLabel" destination="9Ag-sh-ndP" id="PGl-jE-TFu"/>
+                        <outlet property="taskTableView" destination="JhW-3n-Cj5" id="I8L-0x-sew"/>
                         <segue destination="3TC-ON-8lf" kind="presentation" identifier="newGoalSegue" id="1O2-hr-vZR"/>
                         <segue destination="wXn-Vn-IOe" kind="show" identifier="startTask" id="Q84-J1-Uhe"/>
                     </connections>
@@ -211,7 +216,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ddd-ld-5EZ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1786" y="248"/>
+            <point key="canvasLocation" x="3180" y="-443"/>
         </scene>
         <!--Report View Controller-->
         <scene sceneID="9gg-yX-0h5">
@@ -373,7 +378,7 @@ How could you improve tomorrow? (160 words)</string>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WOs-Yo-Tcb" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <exit id="LHq-Qb-zGc" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="1785.5072463768117" y="-484.15178571428567"/>
+            <point key="canvasLocation" x="1799" y="-700"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="8gE-U4-2WP">
@@ -573,7 +578,7 @@ How could you improve tomorrow? (160 words)</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="45A-nm-XmV" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1786" y="973"/>
+            <point key="canvasLocation" x="1032" y="1000"/>
         </scene>
         <!--Music Library-->
         <scene sceneID="p0D-XS-N3K">
@@ -618,7 +623,85 @@ How could you improve tomorrow? (160 words)</string>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LEP-iX-xzs" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <exit id="GTv-PO-wTJ" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="2529" y="973"/>
+            <point key="canvasLocation" x="2149" y="1000"/>
+        </scene>
+        <!--Add Task View Controllers View Controller-->
+        <scene sceneID="klK-BQ-Pvy">
+            <objects>
+                <viewController id="yaq-bO-E46" customClass="AddTaskViewControllersViewController" customModule="mini_challenge_1" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="xr7-Nq-kcr">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <navigationBar contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DpS-uj-jx2">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                <items>
+                                    <navigationItem title="Title" id="dZI-zw-sSX">
+                                        <barButtonItem key="rightBarButtonItem" title="Save" id="RvB-Ud-b3B"/>
+                                    </navigationItem>
+                                </items>
+                            </navigationBar>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Add task for &quot;Goal Name&quot;" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="26T-Ve-wHA">
+                                <rect key="frame" x="103" y="68" width="209" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" placeholder="Do homework?" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="RDU-ah-OhP">
+                                <rect key="frame" x="20" y="137" width="374" height="44"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Name of tasks" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xnR-m7-2d3">
+                                <rect key="frame" x="20" y="108" width="110" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" placeholder="Duration in minutes. 10 minutes" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ZGF-AK-0K4">
+                                <rect key="frame" x="20" y="232" width="374" height="44"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="How much time need to finish task?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bks-F4-YQS">
+                                <rect key="frame" x="20" y="203" width="272" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Start time?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZN8-RZ-NbN">
+                                <rect key="frame" x="20" y="308" width="84" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <datePicker contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="time" minuteInterval="10" translatesAutoresizingMaskIntoConstraints="NO" id="Qes-PR-snx">
+                                <rect key="frame" x="0.0" y="337" width="414" height="162"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                <locale key="locale" localeIdentifier="id_ID"/>
+                            </datePicker>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <viewLayoutGuide key="safeArea" id="2TD-qY-iKH"/>
+                    </view>
+                    <connections>
+                        <outlet property="durationToFinishTask" destination="ZGF-AK-0K4" id="O8d-JO-5tF"/>
+                        <outlet property="nameOfGoals" destination="26T-Ve-wHA" id="jYL-20-auN"/>
+                        <outlet property="saveButton" destination="RvB-Ud-b3B" id="fdc-4C-XQJ"/>
+                        <outlet property="startTime" destination="Qes-PR-snx" id="voz-TX-xQ7"/>
+                        <outlet property="taskNameInput" destination="RDU-ah-OhP" id="fbW-14-bQl"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="aSP-dL-z7c" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3179.7101449275365" y="341.51785714285711"/>
         </scene>
     </scenes>
     <resources>
