@@ -11,6 +11,8 @@ import CoreData
 
 class ViewController: UIViewController {
     
+    
+    
     @IBOutlet weak var dateLabel: UILabel!
     
     @IBOutlet weak var collectionView: UICollectionView!
