@@ -29,6 +29,7 @@ class ReportViewController: UIViewController {
     var countingDistracted = 0
     
     var goalIdArray : [String] = []
+    var falseGoalIdArray : [String] = []
     
     
     override func viewDidLoad() {
@@ -39,9 +40,10 @@ class ReportViewController: UIViewController {
         //method buat ambil data dari coredata
         checkGoalData()
         checkTaskData()
+        checkGoalData()
         
         //set label yang ada di UI
-        totalGoalsCompletedLabel.text = "\(countingGoalRow)"
+        //totalGoalsCompletedLabel.text = "\(countingGoalRow)" //set di func checkGoalData biar datanya valid
         totalTaskCompletedLabel.text = "\(countingTaskRow)"
         totalProductiveMinsLabel.text = "\(countingDuration)"
         totalTimesDistractedLabel.text = "\(countingDistracted)"
@@ -57,7 +59,7 @@ class ReportViewController: UIViewController {
         let context = appDel.persistentContainer.viewContext
         
         let fetch = NSFetchRequest<NSFetchRequestResult>(entityName: "Goal")
-        countingRow = 0
+        countingGoalRow = 0
         
         do {
             let result = try context.fetch(fetch)
@@ -65,7 +67,7 @@ class ReportViewController: UIViewController {
             
             goalIdArray.append(data.value(forKey: "id") as! String)
                 
-             print("Goal table row \(countingRow)")
+             print("Goal table row \(countingGoalRow)")
              print(data.value(forKey: "id") as! String)
              print(data.value(forKey: "goalName") as! String)
              print(data.value(forKey: "date") as! String)
@@ -90,7 +92,8 @@ class ReportViewController: UIViewController {
         } catch {
             print("Failed")
         }
-     print("Total number of row : \(countingRow)")
+        totalGoalsCompletedLabel.text = "\(countingGoalRow)"
+     print("Total number of row : \(countingGoalRow)")
     }
     
     func checkTaskData() {
@@ -120,33 +123,34 @@ class ReportViewController: UIViewController {
                         }
                         else if(data.value(forKey: "goalId") as! String == goalIdArray[i] && data.value(forKey: "status") as! Bool == false)
                         {
+                            falseGoalIdArray.append(data.value(forKey: "goalId")as! String)
                             goalFlag = 0
                         }
                     }
                        
                     
                   
-                   }
+                }
            } catch {
                print("Failed")
            }
-           
+        
+        for i in 0..<goalIdArray.count {
+            updateGoalStatusData(entity: "Goal", uniqueId: goalIdArray[i], newStatus: true)
+        }
+        
+        for i in 0..<falseGoalIdArray.count {
+                   updateGoalStatusData(entity: "Goal", uniqueId: falseGoalIdArray[i], newStatus: false)
+               }
+        
+            
             print(countingDuration)
             print(countingTaskRow)
             print(countingDistracted)
         
        }
     
-    func changeStatusGoal (goalId : String)
-    {
-        // let int counter = 0
-        // fetch array di tabel Task dimana goalId sesuai parameter
-        //looping di array itu
-        //ketika status = true,increment counter
-        //compare counter sama g dengan panjang array
-    }
-    
-    func updateDateData(entity: String, uniqueId: String, newDate: String) {
+    func updateGoalStatusData(entity: String, uniqueId: String, newStatus: Bool) {
            guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
            
            let managedContext = appDelegate.persistentContainer.viewContext
@@ -159,9 +163,9 @@ class ReportViewController: UIViewController {
                let dataToUpdate = fetch[0] as! NSManagedObject
                
                if entity == "Goal" {
-                   dataToUpdate.setValue(newDate, forKey: "date")
+                   dataToUpdate.setValue(newStatus, forKey: "status")
                } else if entity == "Task" {
-                   dataToUpdate.setValue(newDate, forKey: "status")
+                   dataToUpdate.setValue(newStatus, forKey: "status")
                }
                
                try managedContext.save()

@@ -34,20 +34,24 @@ class ViewController: UIViewController  {
         self.navigationController?.isNavigationBarHidden = true //untuk hilangin navigation bar
         showDate()//untuk set dateLabel jadi tanggal hari ini
         
+        //updateDateData(entity: "Goal", uniqueId: "1", newDate: "09/04/20")
+       // updateDateData(entity: "Goal", uniqueId: "2", newDate: "09/04/20")
         
+        /*data dummy
+         //storeDataToGoal(entity: "Goal", id: "1", name: "Mini challenge 1", date: dateString, status: false)
+       // storeDataToGoal(entity: "Goal", id: "2", name: "Mini challenge 2", date: dateString, status: true)
+         storeDataToGoal(entity: "Goal", id: "3", name: "Mini challenge 3", date: dateString, status: false)
         
-       /* data dummy
-         storeDataToGoal(entity: "Goal", id: "1", name: "Mini challenge 1", date: dateString, status: false)
-        storeDataToGoal(entity: "Goal", id: "2", name: "Mini challenge 2", date: dateString, status: true)
+        //storeDataToTask(entity: "Task", id: "1", goalId: "1", taskName: "Wireframe", start: "13:00", duration: 60, distraction: 8, status: true)
+       //storeDataToTask(entity: "Task", id: "2", goalId: "1", taskName: "Mockup", start: "14:00", duration: 60, distraction: 2, status: false)
+       //storeDataToTask(entity: "Task", id: "3", goalId: "1", taskName: "Prototype", start: "15:00", duration: 120, distraction: 1, status: true)
+       //storeDataToTask(entity: "Task", id: "4", goalId: "2", taskName: "Develop", start: "17:00", duration: 40, distraction: 3, status: true)
+       
+        storeDataToTask(entity: "Task", id: "5", goalId: "3", taskName: "Presentation", start: "20:00", duration: 60, distraction: 1, status: true) */
         
-        storeDataToTask(entity: "Task", id: "1", goalId: "1", taskName: "Wireframe", start: "13:00", duration: 60, distraction: 8, status: true)
-       storeDataToTask(entity: "Task", id: "2", goalId: "1", taskName: "Mockup", start: "14:00", duration: 60, distraction: 2, status: false)
-       storeDataToTask(entity: "Task", id: "3", goalId: "1", taskName: "Prototype", start: "15:00", duration: 120, distraction: 1, status: true)
-       storeDataToTask(entity: "Task", id: "4", goalId: "2", taskName: "Develop", start: "17:00", duration: 40, distraction: 3, status: true)
-       */
-        
-        //checkGoalData()
-        //checkTaskData()
+ 
+        checkGoalData()
+        checkTaskData()
         
         
         // Collection View related things - Michael
@@ -81,6 +85,29 @@ class ViewController: UIViewController  {
         }
     }
     
+    func updateDateData(entity: String, uniqueId: String, newDate: String) {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+        
+        let managedContext = appDelegate.persistentContainer.viewContext
+        
+        let fetchRequest:NSFetchRequest<NSFetchRequestResult> = NSFetchRequest.init(entityName: entity)
+        fetchRequest.predicate = NSPredicate(format: "id = %@", uniqueId)
+        
+        do{
+            let fetch = try managedContext.fetch(fetchRequest)
+            let dataToUpdate = fetch[0] as! NSManagedObject
+            
+            if entity == "Goal" {
+                dataToUpdate.setValue(newDate, forKey: "date")
+            } else if entity == "Task" {
+                dataToUpdate.setValue(newDate, forKey: "status")
+            }
+            
+            try managedContext.save()
+        }catch let err{
+            print(err)
+        }
+    }
     
     func storeDataToGoal(entity: String , id: String, name: String, date: String, status: BooleanLiteralType) {
 
