@@ -17,6 +17,7 @@
 		42992A622436F020006ADF8D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 42992A612436F020006ADF8D /* Assets.xcassets */; };
 		42992A652436F020006ADF8D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 42992A632436F020006ADF8D /* LaunchScreen.storyboard */; };
 		42F0B7D5243E23FB00BEA8F7 /* AddTaskViewControllers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42F0B7D4243E23FB00BEA8F7 /* AddTaskViewControllers.swift */; };
+		6C5FE2FA243F41F0000BB4B7 /* TaskTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C5FE2F9243F41F0000BB4B7 /* TaskTableViewCell.swift */; };
 		8D353F742438889600E790DC /* ReportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D353F732438889600E790DC /* ReportViewController.swift */; };
 		CC576ACD243DB2D800262DC8 /* MusicService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC576ACB243DB2D800262DC8 /* MusicService.swift */; };
 		CC576ACE243DB2D800262DC8 /* Identifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC576ACC243DB2D800262DC8 /* Identifiers.swift */; };
@@ -48,6 +49,7 @@
 		42992A642436F020006ADF8D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		42992A662436F020006ADF8D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		42F0B7D4243E23FB00BEA8F7 /* AddTaskViewControllers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTaskViewControllers.swift; sourceTree = "<group>"; };
+		6C5FE2F9243F41F0000BB4B7 /* TaskTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskTableViewCell.swift; sourceTree = "<group>"; };
 		8D353F732438889600E790DC /* ReportViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportViewController.swift; sourceTree = "<group>"; };
 		CC576ACB243DB2D800262DC8 /* MusicService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MusicService.swift; sourceTree = "<group>"; };
 		CC576ACC243DB2D800262DC8 /* Identifiers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Identifiers.swift; sourceTree = "<group>"; };
@@ -107,6 +109,7 @@
 				8D353F732438889600E790DC /* ReportViewController.swift */,
 				42992A632436F020006ADF8D /* LaunchScreen.storyboard */,
 				42F0B7D4243E23FB00BEA8F7 /* AddTaskViewControllers.swift */,
+				6C5FE2F9243F41F0000BB4B7 /* TaskTableViewCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -254,6 +257,7 @@
 				CC576ADF243DB4B200262DC8 /* MusicLibraryViewController.swift in Sources */,
 				42992A562436F020006ADF8D /* AppDelegate.swift in Sources */,
 				D8806DE7243C91F80041A2E7 /* NewGoalViewController.swift in Sources */,
+				6C5FE2FA243F41F0000BB4B7 /* TaskTableViewCell.swift in Sources */,
 				D8D7281E243B0CF800EB3177 /* NewGoalCollectionViewCell.swift in Sources */,
 				8D353F742438889600E790DC /* ReportViewController.swift in Sources */,
 				42992A582436F020006ADF8D /* SceneDelegate.swift in Sources */,

@@ -15,8 +15,6 @@ class NewGoalCollectionViewCell: UICollectionViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
-//        cellView.layer.cornerRadius = 8
-//        cellView.layer.borderWidth = 1
     }
     
     

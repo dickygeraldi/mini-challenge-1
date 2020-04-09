@@ -9,7 +9,11 @@
 import UIKit
 import CoreData
 
-class ViewController: UIViewController  {
+protocol goalsData{
+    func storeDataToGoal(entity: String, name: String, status: BooleanLiteralType)
+    func reloadCollection()
+}
+class ViewController: UIViewController, goalsData, UITableViewDelegate,UITableViewDataSource {
     
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var addTaskPerGoals: UIButton!
@@ -28,6 +32,12 @@ class ViewController: UIViewController  {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+//        to delete goal data
+//        deleteGoalData(entity: "Goal", uniqueId: "0")
+//        deleteGoalData(entity: "Goal", uniqueId: "1")
+//        deleteGoalData(entity: "Goal", uniqueId: "2")
+        
         // Do any additional setup after loading the view.
         hideKeyboardWhenTappedAround()
         
@@ -109,36 +119,75 @@ class ViewController: UIViewController  {
         }
     }
     
-    func storeDataToGoal(entity: String , id: String, name: String, date: String, status: BooleanLiteralType) {
+    func storeDataToGoal(entity: String , name: String, status: BooleanLiteralType) {
+        
+        // get today's date in string
+        let todayDate = Date()
+        dateFormat1.dateFormat = "dd/MM/yy"
+        dateString = dateFormat1.string(from: todayDate)
+        print(dateString)
+        
+        // retrieve id
+        var id = "0"
+        guard let appDel = UIApplication.shared.delegate as? AppDelegate else { return }
+        let context1 = appDel.persistentContainer.viewContext
+        
+        let fetch = NSFetchRequest<NSFetchRequestResult>(entityName: "Goal")
+        var countingRow : Int = 0
+        
+        do {
+            let result = try context1.fetch(fetch)
+            for data in result as! [NSManagedObject] {
+                goalIdArray.append(data.value(forKey: "id") as! String)
+                print("goal id array : \(goalIdArray)")
+                
+                countingRow = countingRow + 1
+                print("Goal table row \(countingRow)")
+                print("Id = \(data.value(forKey: "id"))")
+                
+                id = "\(data.value(forKey: "id")!)"
+                var tempId: Int = Int(id)!
+                tempId = tempId + 1
+                id = "\(tempId)"
+//                print("name = \( data.value(forKey: "goalName"))")
+//                print("date = \(data.value(forKey: "date"))")
+//                print(data.value(forKey: "status"))
+            }
+        } catch {
+            print("Failed")
+        }
+        print("Total number of row in goals: \(countingRow)")
+        
+        print("id is \(id)")
+        
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
 
-           guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+        let context = appDelegate.persistentContainer.viewContext
 
-           let context = appDelegate.persistentContainer.viewContext
+        let dataOfEntity = NSEntityDescription.entity(forEntityName: entity, in: context)!
 
-           let dataOfEntity = NSEntityDescription.entity(forEntityName: entity, in: context)!
+        let listOfEntity = NSManagedObject(entity: dataOfEntity, insertInto: context)
 
-           let listOfEntity = NSManagedObject(entity: dataOfEntity, insertInto: context)
+        if entity == "Goal" {
 
-           if entity == "Goal" {
-               
-               listOfEntity.setValue(id, forKey: "id")
-               listOfEntity.setValue(name, forKey: "goalName")
-               listOfEntity.setValue(dateString, forKey: "date")
-               listOfEntity.setValue(status, forKey: "status")
-           } 
+            listOfEntity.setValue(id, forKey: "id")
+            listOfEntity.setValue(name, forKey: "goalName")
+            listOfEntity.setValue(dateString, forKey: "date")
+            listOfEntity.setValue(status, forKey: "status")
+        }
 
-           do {
-               
-              try context.save()
-              print("Success save data")
-           
-           } catch let error as NSError {
-              
-               print("Gagal save context \(error), \(error.userInfo)")
-           
-           }
-       }
-    
+        do {
+
+            try context.save()
+            print("Success save data")
+
+        } catch let error as NSError {
+
+            print("Gagal save context \(error), \(error.userInfo)")
+
+        }
+    }
+
     func storeDataToTask(entity: String, id: String, goalId: String, taskName:String, start:String, duration: Int, distraction: Int, status: BooleanLiteralType) {
 
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
@@ -289,14 +338,46 @@ class ViewController: UIViewController  {
         }
     }
     
-//    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        return taskPerGoals[
-//    }
-//
-//    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//        <#code#>
-//    }
-    
+
+
+var tasks = [
+    Tasks(distraction: 0, duration: 60, goalId: "1", id: "1", start: "12:30", status:true , taskName: "Add Task")
+]
+
+
+func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    return tasks.count
+}
+
+func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+
+    let cellIdentifier = "TaskTableViewCell"
+    guard let cell = tableView.dequeueReusableCell(withIdentifier: "TaskTableViewCell", for: indexPath) as? TaskTableViewCell else {
+        fatalError("The dequeued cell is not an instance of MealTableViewCell.")
+    }
+
+    let task = tasks[indexPath.row]
+
+    cell.nameTaskLabel.text = task.taskName
+    cell.durationLabel.text = "\(task.duration)"
+
+    return cell
+}
+
+func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    let task = tasks[indexPath.row]
+    performSegue(withIdentifier: "startTask", sender: task)
+}
+
+// fungsi untuk mendelete dengan cara menswipe
+func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+       // 1
+       tasks.remove(at: indexPath.row)
+       // 2
+       let indexPaths = [indexPath]
+       tableView.deleteRows(at: indexPaths as [IndexPath],with: .automatic)
+  }
+
     
     
 }
@@ -427,8 +508,18 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource{
         }
         // if selected an add goal cell
         else{
-            self.performSegue(withIdentifier: "newGoalSegue", sender: self)
+//            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+//            let vc = storyboard.instantiateViewController(withIdentifier: "NewGoalViewController")
+            let vc = self.storyboard?.instantiateViewController(withIdentifier: "newGoalViewController") as! NewGoalViewController
+//            let vc = NewGoalViewController()
+            vc.delegate = self
+            self.present(vc, animated: true)
+            
         }
+    }
+    
+    func reloadCollection(){
+        collectionView.reloadData()
     }
     
     // returns an array of today's goals
