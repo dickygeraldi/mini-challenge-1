@@ -13,7 +13,7 @@ protocol goalsData{
     func storeDataToGoal(entity: String, name: String, status: BooleanLiteralType)
     func reloadCollection()
 }
-class ViewController: UIViewController, goalsData {
+class ViewController: UIViewController, goalsData, UITableViewDelegate,UITableViewDataSource {
     
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var addTaskPerGoals: UIButton!
@@ -338,14 +338,46 @@ class ViewController: UIViewController, goalsData {
         }
     }
     
-//    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        return taskPerGoals[
-//    }
-//
-//    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//        <#code#>
-//    }
-    
+
+
+var tasks = [
+    Tasks(distraction: 0, duration: 60, goalId: "1", id: "1", start: "12:30", status:true , taskName: "Add Task")
+]
+
+
+func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    return tasks.count
+}
+
+func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+
+    let cellIdentifier = "TaskTableViewCell"
+    guard let cell = tableView.dequeueReusableCell(withIdentifier: "TaskTableViewCell", for: indexPath) as? TaskTableViewCell else {
+        fatalError("The dequeued cell is not an instance of MealTableViewCell.")
+    }
+
+    let task = tasks[indexPath.row]
+
+    cell.nameTaskLabel.text = task.taskName
+    cell.durationLabel.text = "\(task.duration)"
+
+    return cell
+}
+
+func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    let task = tasks[indexPath.row]
+    performSegue(withIdentifier: "startTask", sender: task)
+}
+
+// fungsi untuk mendelete dengan cara menswipe
+func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+       // 1
+       tasks.remove(at: indexPath.row)
+       // 2
+       let indexPaths = [indexPath]
+       tableView.deleteRows(at: indexPaths as [IndexPath],with: .automatic)
+  }
+
     
     
 }
