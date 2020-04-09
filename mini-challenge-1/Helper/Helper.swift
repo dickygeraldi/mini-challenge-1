@@ -165,7 +165,7 @@ class Helper {
 extension UITextField {
     
     func setPadding() {
-        let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 48, height: self.frame.height))
+        let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 16, height: self.frame.height))
 
         self.leftView = paddingView
         self.leftViewMode = .always

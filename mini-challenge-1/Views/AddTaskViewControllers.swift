@@ -13,9 +13,14 @@ class AddTaskViewControllers: UIViewController {
     @IBOutlet weak var nameOfGoals: UILabel!
     @IBOutlet weak var taskNameInput: UITextField!
     @IBOutlet weak var durationToFinishTask: UITextField!
-    @IBOutlet weak var startTime: UIDatePicker!
+    @IBOutlet weak var startTimeField: UITextField!
     
-    var tempTasks: Tasks? 
+    private var datePicker: UIDatePicker?
+    
+    var helper = Helper()
+    
+    var tempTasks: Tasks = Tasks.init(distraction: 10, duration: 10, goalId: "123", id: "123", start: "10 minutes", status: false, taskName: "Uhuyy")
+    
     var dataGoalsId: String = ""
     
     override func viewDidLoad() {
@@ -26,6 +31,33 @@ class AddTaskViewControllers: UIViewController {
         
         durationToFinishTask.setupTextField()
         durationToFinishTask.setPadding()
+        
+        startTimeField.setupTextField()
+        startTimeField.setPadding()
+        
+        datePicker = UIDatePicker()
+        datePicker?.datePickerMode = .dateAndTime
+        datePicker?.minuteInterval = 10
+        datePicker?.addTarget(self, action: #selector(AddTaskViewControllers.dateChanged(datePicker:)), for: .valueChanged)
+        
+        startTimeField.inputView = datePicker
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(AddTaskViewControllers.viewTapped(gestureRecognizer:)))
+        
+        view.addGestureRecognizer(tapGesture)
+    }
+    
+    @objc func viewTapped(gestureRecognizer: UITapGestureRecognizer) {
+        view.endEditing(true)
+    }
+    
+    @objc func dateChanged(datePicker: UIDatePicker) {
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "dd/MM/yyyy HH:mm"
+        
+        startTimeField.text = dateFormatter.string(from: datePicker.date)
+        view.endEditing(true)
     }
     
     func randomString(length: Int) -> String {
@@ -36,12 +68,14 @@ class AddTaskViewControllers: UIViewController {
     @IBAction func saveButton(_ sender: Any) {
         if checkMandatoryFields() == true {
             
-            tempTasks?.taskName = taskNameInput.text!
-            tempTasks?.distraction = 0
-            tempTasks?.goalId = dataGoalsId
-            tempTasks?.id = randomString(length: 6)
-            tempTasks?.status = false
-//            tempTasks?.duration = startTime.date
+            tempTasks.taskName = taskNameInput.text!
+            tempTasks.distraction = 0
+            tempTasks.goalId = dataGoalsId
+            tempTasks.id = randomString(length: 6)
+            tempTasks.status = false
+            tempTasks.start = startTimeField.text ?? ""
+        
+            
         
         } else {
             
@@ -49,6 +83,7 @@ class AddTaskViewControllers: UIViewController {
         
         }
     }
+    
     
     func checkMandatoryFields() -> Bool {
         if taskNameInput.text == "" || durationToFinishTask.text == "" {

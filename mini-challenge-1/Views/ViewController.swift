@@ -282,7 +282,7 @@ class ViewController: UIViewController  {
         do{
             let dataToDelete = try managedContext.fetch(fetchRequest)[0] as! NSManagedObject
             managedContext.delete(dataToDelete)
-            
+//
             try managedContext.save()
         }catch let err{
             print(err)
@@ -391,7 +391,7 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource{
         let goalsArray = retrieveTodayGoalData()
         var currentGoal: goalStruct?
         
-        print(currentGoal?.goalId)
+//        print(currentGoal?.goalId)
         
         currentGoal = nil
         
