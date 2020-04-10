@@ -16,6 +16,7 @@ class GoalCollectionViewCell: UICollectionViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        self.contentView.isUserInteractionEnabled = false
     }
 
     @IBAction func editGoal(_ sender: Any) {
