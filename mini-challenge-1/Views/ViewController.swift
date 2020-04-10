@@ -27,8 +27,12 @@ class ViewController: UIViewController, goalsData, UITableViewDelegate,UITableVi
     let dateFormat2: DateFormatter = DateFormatter ()
     
     var goalIdArray : [String] = []
-    
-    var taskPerGoals = [String: [Tasks]]()
+
+    var goalData: [goalStruct]?
+//    var taskPerGoals = [String: [Tasks]]()
+    var tempTasks: [Tasks] = []
+    let helper = Helper()
+    var flagging = "add"
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,6 +44,7 @@ class ViewController: UIViewController, goalsData, UITableViewDelegate,UITableVi
         
         // Do any additional setup after loading the view.
         hideKeyboardWhenTappedAround()
+        (_, tempTasks, _) = helper.retrieveData(entity: "Task", conditional: "")
         
         self.navigationController?.isNavigationBarHidden = true //untuk hilangin navigation bar
         showDate()//untuk set dateLabel jadi tanggal hari ini
@@ -67,11 +72,22 @@ class ViewController: UIViewController, goalsData, UITableViewDelegate,UITableVi
         // Collection View related things - Michael
         setupCollectionViewCell()
         collectionView.backgroundColor = UIColor.clear
+        taskTableView.dataSource = self
+        taskTableView.delegate = self
     }
     
     @IBAction func myUnwindAction(unwindSegue:UIStoryboardSegue)
     {
         
+    }
+    
+    @IBAction func viewAddTask(unwindSegue: UIStoryboardSegue) {
+        taskTableView.reloadData()
+    }
+    
+    func getTaskData() {
+        (_, tempTasks, _) = helper.retrieveData(entity: "Task", conditional: "")
+        print("Dicky Tracking: \(tempTasks)")
     }
     
     func showDate()
@@ -91,7 +107,10 @@ class ViewController: UIViewController, goalsData, UITableViewDelegate,UITableVi
             destination.tempDate = dateString2
             destination.tempDate2 = dateString
             
+        } else if let destination = segue.destination as? AddTaskViewControllers {
             
+            // Tambahin disini ya ris kalau mau dynamic view
+            destination.flagging = flagging
         }
     }
     
@@ -292,7 +311,7 @@ class ViewController: UIViewController, goalsData, UITableViewDelegate,UITableVi
                 print(" start = \(data.value(forKey: "start"))")
                  print(" duration = \(data.value(forKey: "duration"))")
                  print(" distraction = \(data.value(forKey: "distraction"))")
-                 print((data.value(forKey: "status") as! BooleanLiteralType))
+//                 print((data.value(forKey: "status") as! Bool))
             }
         } catch {
             print("Failed")
@@ -331,54 +350,47 @@ class ViewController: UIViewController, goalsData, UITableViewDelegate,UITableVi
         do{
             let dataToDelete = try managedContext.fetch(fetchRequest)[0] as! NSManagedObject
             managedContext.delete(dataToDelete)
-            
+//
             try managedContext.save()
         }catch let err{
             print(err)
         }
     }
-    
-
-
-var tasks = [
-    Tasks(distraction: 0, duration: 60, goalId: "1", id: "1", start: "12:30", status:true , taskName: "Add Task")
-]
-
 
 func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    return tasks.count
+    return tempTasks.count
 }
-
+    
 func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
     let cellIdentifier = "TaskTableViewCell"
-    guard let cell = tableView.dequeueReusableCell(withIdentifier: "TaskTableViewCell", for: indexPath) as? TaskTableViewCell else {
+    guard let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? TaskTableViewCell else {
         fatalError("The dequeued cell is not an instance of MealTableViewCell.")
     }
+    
+    cell.delegate = self as? CustomCellUpdater
 
-    let task = tasks[indexPath.row]
+    let task = tempTasks[indexPath.row]
 
     cell.nameTaskLabel.text = task.taskName
-    cell.durationLabel.text = "\(task.duration)"
+    cell.durationLabel.text = "\(task.duration) minutes start at \(task.start)"
 
     return cell
 }
 
 func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-    let task = tasks[indexPath.row]
+    let task = tempTasks[indexPath.row]
     performSegue(withIdentifier: "startTask", sender: task)
 }
 
 // fungsi untuk mendelete dengan cara menswipe
 func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
        // 1
-       tasks.remove(at: indexPath.row)
+       tempTasks.remove(at: indexPath.row)
        // 2
        let indexPaths = [indexPath]
        tableView.deleteRows(at: indexPaths as [IndexPath],with: .automatic)
   }
-
-    
     
 }
 
@@ -391,6 +403,7 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource{
         var goalDate: String
         var goalStatus: Any
     }
+    
     // to register the nib files of collection cells
     func setupCollectionViewCell(){
         collectionView.register(UINib(nibName: "GoalCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "goalCollectionViewCell")
@@ -470,9 +483,11 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource{
         // index at where the add cell is used
         let addFlag = findNumberOfGoalsToday()
         let goalsArray = retrieveTodayGoalData()
+        
+        goalData = goalsArray
         var currentGoal: goalStruct?
         
-        print(currentGoal?.goalId)
+//        print(currentGoal?.goalId)
         
         currentGoal = nil
         
@@ -501,6 +516,7 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource{
         
         // index at where the add cell is used
         let addFlag = findNumberOfGoalsToday()
+        print("Dicky Tracking: \(addFlag) : \(indexPath.row)")
         
         // if selected a goal cell
         if(indexPath.row < addFlag){
@@ -517,7 +533,7 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource{
             
         }
     }
-    
+        
     func reloadCollection(){
         collectionView.reloadData()
     }

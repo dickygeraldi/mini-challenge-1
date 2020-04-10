@@ -57,9 +57,11 @@ class Helper {
     }
     
     // function for store data by entity and Data
-    func storeData(entity: String, dataGoals: Goals, dataTask: Tasks) {
-
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+    func storeData(entity: String, dataGoals: Goals? = nil,  dataTask: Tasks?) -> String {
+        
+        var message: String = ""
+        
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return "" }
 
         let context = appDelegate.persistentContainer.viewContext
 
@@ -69,33 +71,34 @@ class Helper {
 
         if entity == "Goal" {
             
-            listOfEntity.setValue(dataGoals.id, forKey: "id")
-            listOfEntity.setValue(dataGoals.goalName, forKey: "goalName")
-            listOfEntity.setValue(dataGoals.date, forKey: "date")
-            listOfEntity.setValue(dataGoals.status, forKey: "status")
+            listOfEntity.setValue(dataGoals?.id, forKey: "id")
+            listOfEntity.setValue(dataGoals?.goalName, forKey: "goalName")
+            listOfEntity.setValue(dataGoals?.date, forKey: "date")
+            listOfEntity.setValue(dataGoals?.status, forKey: "status")
             
         } else if entity == "Task" {
             
-            listOfEntity.setValue(dataTask.id, forKey: "id")
-            listOfEntity.setValue(dataTask.goalId, forKey: "goalId")
-            listOfEntity.setValue(dataTask.taskName, forKey: "taskName")
-            listOfEntity.setValue(dataTask.start, forKey: "start")
-            listOfEntity.setValue(dataTask.duration, forKey: "duration")
-            listOfEntity.setValue(dataTask.distraction, forKey: "distraction")
-            listOfEntity.setValue(dataTask.status, forKey: "status")
+            listOfEntity.setValue(dataTask?.id, forKey: "id")
+            listOfEntity.setValue(dataTask?.goalId, forKey: "goalId")
+            listOfEntity.setValue(dataTask?.taskName, forKey: "taskName")
+            listOfEntity.setValue(dataTask?.start, forKey: "start")
+            listOfEntity.setValue(dataTask?.duration, forKey: "duration")
+            listOfEntity.setValue(dataTask?.distraction, forKey: "distraction")
+            listOfEntity.setValue(dataTask?.status, forKey: "status")
         
         }
 
         do {
             
            try context.save()
-           print("Success save data")
-        
+            message = "00"
         } catch let error as NSError {
            
             print("Gagal save context \(error), \(error.userInfo)")
-        
+            message = "01"
         }
+        
+        return message
     }
     
     // Function for checking all data on core Data
@@ -113,6 +116,8 @@ class Helper {
         let context = appDel.persistentContainer.viewContext
         
         let fetch = NSFetchRequest<NSFetchRequestResult>(entityName: entity)
+        let sort = NSSortDescriptor(key: "start", ascending: false)
+        fetch.sortDescriptors = [sort]
         
         do {
             
@@ -138,12 +143,13 @@ class Helper {
                         countingProductiveDuration += data.value(forKey: "duration") as! Int
                         countingDistraction += data.value(forKey: "distraction") as! Int
                     }
+
+                    print("Dicky Tracking: \(data.value(forKey: "distraction") as! Int)")
+//                    if data.value(forKey: "goalId") as! String == conditional {
+                        
+                    tempTask.append(Tasks(distraction: data.value(forKey: "distraction") as! Int, duration: data.value(forKey: "duration") as! Int, goalId: data.value(forKey: "goalId") as! String, id: data.value(forKey: "id") as! String, start: data.value(forKey: "start") as! String, status: data.value(forKey: "status") as! Bool, taskName: data.value(forKey: "taskName") as! String))
                     
-                    if data.value(forKey: "goalId") as! String == conditional {
-                        
-                        tempTask.append(Tasks(distraction: data.value(forKey: "distraction") as! Int, duration: data.value(forKey: "duration") as! Int, goalId: data.value(forKey: "goalId") as! String, id: data.value(forKey: "id") as! String, start: data.value(forKey: "start") as! String, status: data.value(forKey: "status") as! Bool, taskName: data.value(forKey: "taskName") as! String))
-                        
-                    }
+//                    }
                     
                 }
                 
@@ -165,7 +171,7 @@ class Helper {
 extension UITextField {
     
     func setPadding() {
-        let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 48, height: self.frame.height))
+        let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 16, height: self.frame.height))
 
         self.leftView = paddingView
         self.leftViewMode = .always
