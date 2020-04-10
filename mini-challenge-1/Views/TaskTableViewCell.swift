@@ -8,13 +8,21 @@
 
 import UIKit
 
+protocol CustomCellUpdater: class { // the name of the protocol you can put any
+    func updateTableView()
+}
+
 class TaskTableViewCell: UITableViewCell {
     @IBOutlet weak var nameTaskLabel: UILabel!
     @IBOutlet weak var durationLabel: UILabel!
     
+    weak var delegate: CustomCellUpdater?
+
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        
+        delegate?.updateTableView()
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -22,5 +30,7 @@ class TaskTableViewCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
+    
+    
 
 }
