@@ -23,6 +23,7 @@ class AddTaskViewControllers: UIViewController {
     var tempTasks: Tasks = Tasks.init(distraction: 10, duration: 10, goalId: "123", id: "123", start: "1", status: false, taskName: "22 ")
     
     var dataGoalsId: String = ""
+    var goalName: String = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,7 +41,7 @@ class AddTaskViewControllers: UIViewController {
         if flagging == "edit" {
             setUpData(taskData: tempTasks)
         } else {
-            labelTask.text = "Add task for \"\(dataGoalsId)\""
+            labelTask.text = "Add task for \"\(goalName)\""
             navigationBar.topItem?.title = "Add Task"
         }
     }
@@ -53,11 +54,6 @@ class AddTaskViewControllers: UIViewController {
         navigationBar.topItem?.title = "Edit Task"
     }
     
-    func randomString(length: Int) -> String {
-        let letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
-        return String((0..<length).map{ _ in letters.randomElement()! })
-    }
-    
     override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
         if checkMandatoryFields() == false {
             showAlert(message: "all data must be filled")
@@ -68,10 +64,12 @@ class AddTaskViewControllers: UIViewController {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let taskId = helper.countingTaskData(entity: "Task", conditional: "")
+        
         tempTasks.taskName = taskNameInput.text!
         tempTasks.distraction = 0
-        tempTasks.goalId = randomString(length: 6)
-        tempTasks.id = randomString(length: 6)
+        tempTasks.goalId = dataGoalsId
+        tempTasks.id = "\(taskId)"
         tempTasks.status = false
         tempTasks.start = startTimeField.text ?? ""
         tempTasks.duration = (durationToFinishTask.text! as NSString).integerValue

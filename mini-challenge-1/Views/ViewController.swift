@@ -29,7 +29,11 @@ class ViewController: UIViewController, goalsData, UITableViewDelegate,UITableVi
     var goalIdArray : [String] = []
 
     var goalData: [goalStruct]?
-//    var taskPerGoals = [String: [Tasks]]()
+    var selectedGoalsId: String?
+    var selectedGoalsName: String?
+    
+    var taskPerGoals = [String: [Tasks]]()
+    
     var tempTasks: [Tasks] = []
     let helper = Helper()
     var flagging = "add"
@@ -44,7 +48,7 @@ class ViewController: UIViewController, goalsData, UITableViewDelegate,UITableVi
         
         // Do any additional setup after loading the view.
         hideKeyboardWhenTappedAround()
-        (_, tempTasks, _) = helper.retrieveData(entity: "Task", conditional: "")
+        taskPerGoals = helper.retrieveDataBygoals(entity: "Task")
         
         self.navigationController?.isNavigationBarHidden = true //untuk hilangin navigation bar
         showDate()//untuk set dateLabel jadi tanggal hari ini
@@ -86,8 +90,7 @@ class ViewController: UIViewController, goalsData, UITableViewDelegate,UITableVi
     }
     
     func getTaskData() {
-        (_, tempTasks, _) = helper.retrieveData(entity: "Task", conditional: "")
-        print("Dicky Tracking: \(tempTasks)")
+        taskPerGoals = helper.retrieveDataBygoals(entity: "Task")
     }
     
     func showDate()
@@ -108,9 +111,9 @@ class ViewController: UIViewController, goalsData, UITableViewDelegate,UITableVi
             destination.tempDate2 = dateString
             
         } else if let destination = segue.destination as? AddTaskViewControllers {
-            
-            // Tambahin disini ya ris kalau mau dynamic view
             destination.flagging = flagging
+            destination.dataGoalsId = selectedGoalsId!
+            destination.goalName = selectedGoalsName!
         }
     }
     
@@ -358,7 +361,7 @@ class ViewController: UIViewController, goalsData, UITableViewDelegate,UITableVi
     }
 
 func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    return tempTasks.count
+    return taskPerGoals[selectedGoalsId ?? ""]?.count ?? 0
 }
     
 func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -370,10 +373,10 @@ func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> U
     
     cell.delegate = self as? CustomCellUpdater
 
-    let task = tempTasks[indexPath.row]
-
-    cell.nameTaskLabel.text = task.taskName
-    cell.durationLabel.text = "\(task.duration) minutes start at \(task.start)"
+    let task = taskPerGoals[selectedGoalsId ?? ""]
+    print("DickyTracking table: \(task)")
+    cell.nameTaskLabel.text = task?[indexPath.row].taskName
+    cell.durationLabel.text = "\(task?[indexPath.row].duration ?? 0) minutes start at \(task?[indexPath.row].start ?? "")"
 
     return cell
 }
@@ -516,11 +519,13 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource{
         
         // index at where the add cell is used
         let addFlag = findNumberOfGoalsToday()
-        print("Dicky Tracking: \(addFlag) : \(indexPath.row)")
         
         // if selected a goal cell
         if(indexPath.row < addFlag){
-
+            selectedGoalsId = goalData?[indexPath.row].goalId
+            selectedGoalsName = goalData?[indexPath.row].goalName
+            taskTableView.reloadData()
+            print("SelectedTableIs: \(taskPerGoals[selectedGoalsId!])")
         }
         // if selected an add goal cell
         else{
@@ -570,16 +575,12 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource{
                     goalsArray.append(tempGoal)
                 }
                 
-                
-                
                 countingRow = countingRow + 1
                 print("Goal table row \(countingRow)")
                 print("Id = \(data.value(forKey: "id"))")
                 print("name = \( data.value(forKey: "goalName"))")
                 print("date = \(data.value(forKey: "date"))")
                 print(data.value(forKey: "status"))
-                
-                
                 
             }
         } catch {

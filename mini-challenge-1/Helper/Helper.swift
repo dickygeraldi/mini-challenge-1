@@ -101,6 +101,7 @@ class Helper {
         return message
     }
     
+    
     // Function for checking all data on core Data
     func retrieveData(entity: String, conditional: String) -> ([Goals], [Tasks], ReportData) {
         
@@ -165,6 +166,61 @@ class Helper {
         reportData.totalTimeDistraction = countingDistraction
         
         return (tempGoals, tempTask, reportData)
+    }
+    
+    // Function for checking all data on core Data
+    func retrieveDataBygoals(entity: String) -> ([String: [Tasks]]) {
+        
+        var taskPerGoals = [String: [Tasks]]()
+        
+        guard let appDel = UIApplication.shared.delegate as? AppDelegate else { return (taskPerGoals) }
+        let context = appDel.persistentContainer.viewContext
+        
+        let fetch = NSFetchRequest<NSFetchRequestResult>(entityName: entity)
+        let sort = NSSortDescriptor(key: "start", ascending: false)
+        fetch.sortDescriptors = [sort]
+        
+        do {
+            
+            let result = try context.fetch(fetch)
+                            
+            for data in result as! [NSManagedObject] {
+                                
+                taskPerGoals.updateValue([Tasks.init(distraction: data.value(forKey: "distraction") as! Int, duration: data.value(forKey: "duration") as! Int, goalId: data.value(forKey: "goalId") as! String, id: data.value(forKey: "id") as! String, start: data.value(forKey: "start") as! String, status: data.value(forKey: "status") as! Bool, taskName: data.value(forKey: "taskName") as! String)], forKey: data.value(forKey: "goalId") as! String)
+                
+            }
+            
+        } catch {
+            print("Failed")
+        }
+        
+        return (taskPerGoals)
+    }
+    
+    // Function for checking all data on core Data
+    func countingTaskData(entity: String, conditional: String) -> Int {
+        
+        var counting: Int = 0
+        
+        guard let appDel = UIApplication.shared.delegate as? AppDelegate else { return counting }
+        let context = appDel.persistentContainer.viewContext
+        
+        let fetch = NSFetchRequest<NSFetchRequestResult>(entityName: entity)
+        let sort = NSSortDescriptor(key: "start", ascending: false)
+        fetch.sortDescriptors = [sort]
+        
+        do {
+            let result = try context.fetch(fetch)
+            
+            for _ in result as! [NSManagedObject] {
+                counting += 1
+            }
+    
+        } catch {
+            print("Failed")
+        }
+        
+        return counting
     }
 }
 
