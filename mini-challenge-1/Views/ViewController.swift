@@ -382,8 +382,9 @@ func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> U
 }
 
 func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-    let task = tempTasks[indexPath.row]
-    performSegue(withIdentifier: "startTask", sender: task)
+    let task = taskPerGoals[selectedGoalsId ?? ""]
+    let taskData = task?[indexPath.row]
+    performSegue(withIdentifier: "startTask", sender: taskData)
 }
 
 // fungsi untuk mendelete dengan cara menswipe
