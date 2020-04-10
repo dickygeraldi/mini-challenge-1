@@ -44,6 +44,7 @@ class ViewController: UIViewController, goalsData, UITableViewDelegate,UITableVi
         
         // Do any additional setup after loading the view.
         hideKeyboardWhenTappedAround()
+        (_, tempTasks, _) = helper.retrieveData(entity: "Task", conditional: "")
         
         self.navigationController?.isNavigationBarHidden = true //untuk hilangin navigation bar
         showDate()//untuk set dateLabel jadi tanggal hari ini
@@ -71,18 +72,22 @@ class ViewController: UIViewController, goalsData, UITableViewDelegate,UITableVi
         // Collection View related things - Michael
         setupCollectionViewCell()
         collectionView.backgroundColor = UIColor.clear
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-    
-        (_, tempTasks, _) = helper.retrieveData(entity: "Task", conditional: "")
-        
-        taskTableView.reloadData()
+        taskTableView.dataSource = self
+        taskTableView.delegate = self
     }
     
     @IBAction func myUnwindAction(unwindSegue:UIStoryboardSegue)
     {
         
+    }
+    
+    @IBAction func viewAddTask(unwindSegue: UIStoryboardSegue) {
+        taskTableView.reloadData()
+    }
+    
+    func getTaskData() {
+        (_, tempTasks, _) = helper.retrieveData(entity: "Task", conditional: "")
+        print("Dicky Tracking: \(tempTasks)")
     }
     
     func showDate()
@@ -355,10 +360,6 @@ class ViewController: UIViewController, goalsData, UITableViewDelegate,UITableVi
 func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     return tempTasks.count
 }
-
-func updateTableView() {
-    taskTableView.reloadData() // you do have an outlet of tableView I assume
-}
     
 func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
@@ -519,9 +520,7 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource{
         
         // if selected a goal cell
         if(indexPath.row < addFlag){
-            let goalsSelected: goalStruct = (goalData?[indexPath.row])!
-            print("Dicky Tracking: \(goalData)")
-            print("Dicky Tracking: \(goalsSelected.goalId)")
+            
         }
         // if selected an add goal cell
         else{
@@ -534,7 +533,7 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource{
             
         }
     }
-    
+        
     func reloadCollection(){
         collectionView.reloadData()
     }

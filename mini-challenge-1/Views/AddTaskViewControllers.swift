@@ -58,33 +58,36 @@ class AddTaskViewControllers: UIViewController {
         return String((0..<length).map{ _ in letters.randomElement()! })
     }
     
-    @IBAction func saveButton(_ sender: Any) {
-        if checkMandatoryFields() == true {
-            
-            tempTasks.taskName = taskNameInput.text!
-            tempTasks.distraction = 0
-            tempTasks.goalId = randomString(length: 6)
-            tempTasks.id = randomString(length: 6)
-            tempTasks.status = false
-            tempTasks.start = startTimeField.text ?? ""
-            tempTasks.duration = (durationToFinishTask.text! as NSString).integerValue
-            
-            print("Datanya Dicky: \(tempTasks)")
-            let code = helper.storeData(entity: "Task", dataGoals: nil, dataTask: tempTasks)
-            
-            if code != "00" {
-                showAlert(message: "Data could'n be save. Try again later")
-            } else {
-                dismiss(animated: true, completion: nil)
-            }
-            
-        } else {
-            
+    override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
+        if checkMandatoryFields() == false {
             showAlert(message: "all data must be filled")
-        
+            return false
         }
+        
+        return true
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        tempTasks.taskName = taskNameInput.text!
+        tempTasks.distraction = 0
+        tempTasks.goalId = randomString(length: 6)
+        tempTasks.id = randomString(length: 6)
+        tempTasks.status = false
+        tempTasks.start = startTimeField.text ?? ""
+        tempTasks.duration = (durationToFinishTask.text! as NSString).integerValue
+        
+        print("Datanya Dicky: \(tempTasks)")
+        let code = helper.storeData(entity: "Task", dataGoals: nil, dataTask: tempTasks)
+        
+        if code != "00" {
+            showAlert(message: "Data could'n be save. Try again later")
+        } else {
+            let destination = segue.destination as! ViewController
+            destination.getTaskData()
+            dismiss(animated: true, completion: nil)
+        }
+        
+    }
     
     func checkMandatoryFields() -> Bool {
         if taskNameInput.text == "" || durationToFinishTask.text == "" {

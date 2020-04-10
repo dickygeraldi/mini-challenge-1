@@ -116,6 +116,8 @@ class Helper {
         let context = appDel.persistentContainer.viewContext
         
         let fetch = NSFetchRequest<NSFetchRequestResult>(entityName: entity)
+        let sort = NSSortDescriptor(key: "start", ascending: false)
+        fetch.sortDescriptors = [sort]
         
         do {
             
