@@ -18,6 +18,15 @@ class GoalCollectionViewCell: UICollectionViewCell {
         // Initialization code
         self.contentView.isUserInteractionEnabled = false
     }
+    
+    override var isSelected: Bool {
+        didSet {
+            self.contentView.backgroundColor = isSelected ? UIColor(red: 225/300, green: 243/300, blue: 242/300, alpha: 1) : UIColor(red: 255/255, green: 255/255, blue: 255/255, alpha: 1)
+            self.goalLabel.font = isSelected ? UIFont.boldSystemFont(ofSize: 14.0) : UIFont.systemFont(ofSize: 14.0)
+            
+        }
+    }
+
 
     @IBAction func editGoal(_ sender: Any) {
         print("test")

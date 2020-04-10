@@ -33,7 +33,7 @@ class ViewController: UIViewController, goalsData, UITableViewDelegate,UITableVi
     var tempTasks: [Tasks] = []
     let helper = Helper()
     var flagging = "add"
-    
+        
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -520,7 +520,7 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource{
         
         // if selected a goal cell
         if(indexPath.row < addFlag){
-            
+
         }
         // if selected an add goal cell
         else{
@@ -533,7 +533,7 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource{
             
         }
     }
-        
+    
     func reloadCollection(){
         collectionView.reloadData()
     }
