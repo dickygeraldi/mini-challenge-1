@@ -20,9 +20,15 @@ class TaskViewController: UIViewController {
     var currentTask: Task?
     var musicService = MusicService()
     
+    var tempTasks: Tasks = Tasks.init(distraction: 10, duration: 10, goalId: "123", id: "123", start: "1", status: false, taskName: "22 ")
+    var dataGoalsId: String = ""
+    var goalName: String = ""
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
+       
+        setUpData(taskData: tempTasks)
         focusMessageLabel.isHidden = true
         
         // 300 is width of circle fill in distraction button
@@ -85,6 +91,12 @@ class TaskViewController: UIViewController {
         }
     }
     
+    
+    func setUpData(taskData: Tasks?) {
+        taskTitleLabel.text = taskData?.taskName
+//        durationToFinishTask.text = "\(taskData?.duration ?? 0)"
+//        startTimeField.text = "\(taskData?.start ?? "0")"
+    }
     // MARK: - distraction button
 
     @IBAction func distractionButtonTapped(_ sender: UIButton) {

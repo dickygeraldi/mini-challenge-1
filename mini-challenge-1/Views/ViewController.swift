@@ -127,6 +127,12 @@ class ViewController: UIViewController, goalsData, UITableViewDelegate,UITableVi
                 destination.dataGoalsId = selectedGoalsId!
                 destination.goalName = selectedGoalsName!
             }
+        }   else if let destination = segue.destination as? TaskViewController {
+            if segue.identifier == "startTask" {
+                destination.tempTasks = tempTasks
+                destination.dataGoalsId = selectedGoalsId!
+                destination.goalName = selectedGoalsName!
+            }
         }
     }
     
