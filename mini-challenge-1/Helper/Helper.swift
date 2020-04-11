@@ -147,7 +147,7 @@ class Helper {
 
                     print("Dicky Tracking: \(data.value(forKey: "distraction") as! Int)")
 //                    if data.value(forKey: "goalId") as! String == conditional {
-                        
+                    
                     tempTask.append(Tasks(distraction: data.value(forKey: "distraction") as! Int, duration: data.value(forKey: "duration") as! Int, goalId: data.value(forKey: "goalId") as! String, id: data.value(forKey: "id") as! String, start: data.value(forKey: "start") as! String, status: data.value(forKey: "status") as! Bool, taskName: data.value(forKey: "taskName") as! String))
                     
 //                    }
@@ -183,10 +183,22 @@ class Helper {
         do {
             
             let result = try context.fetch(fetch)
-                            
+            var tasks: [Tasks]
+            
             for data in result as! [NSManagedObject] {
+                
+                if taskPerGoals[data.value(forKey: "goalId") as! String] != nil {
+                    
+                    tasks = taskPerGoals[data.value(forKey: "goalId") as! String]!
+                    tasks.append(Tasks(distraction: data.value(forKey: "distraction") as! Int, duration: data.value(forKey: "duration") as! Int, goalId: data.value(forKey: "goalId") as! String, id: data.value(forKey: "id") as! String, start: data.value(forKey: "start") as! String, status: data.value(forKey: "status") as! Bool, taskName: data.value(forKey: "taskName") as! String))
+                    
+                } else {
+                    
+                    tasks = [Tasks(distraction: data.value(forKey: "distraction") as! Int, duration: data.value(forKey: "duration") as! Int, goalId: data.value(forKey: "goalId") as! String, id: data.value(forKey: "id") as! String, start: data.value(forKey: "start") as! String, status: data.value(forKey: "status") as! Bool, taskName: data.value(forKey: "taskName") as! String)]
+                    
+                }
                                 
-                taskPerGoals.updateValue([Tasks.init(distraction: data.value(forKey: "distraction") as! Int, duration: data.value(forKey: "duration") as! Int, goalId: data.value(forKey: "goalId") as! String, id: data.value(forKey: "id") as! String, start: data.value(forKey: "start") as! String, status: data.value(forKey: "status") as! Bool, taskName: data.value(forKey: "taskName") as! String)], forKey: data.value(forKey: "goalId") as! String)
+                taskPerGoals.updateValue(tasks, forKey: data.value(forKey: "goalId") as! String)
                 
             }
             
