@@ -19,10 +19,20 @@ class TaskViewController: UIViewController {
     
     var currentTask: Task?
     var musicService = MusicService()
+    var dataHelper = Helper()
+    
+    var tempTasks: Tasks = Tasks.init(distraction: 10, duration: 10, goalId: "123", id: "123", start: "1", status: false, taskName: "22 ")
+    var dataGoalsId: String = ""
+    var goalName: String = ""
+    
+    override func viewWillAppear(_ animated: Bool) {
+        navigationController?.setNavigationBarHidden(false, animated: true)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+    
+        setUpData(taskData: tempTasks)
         focusMessageLabel.isHidden = true
         
         // 300 is width of circle fill in distraction button
@@ -45,12 +55,14 @@ class TaskViewController: UIViewController {
             let minutes: Int = (secondsLeft % 3600) / 60
             let seconds: Int = secondsLeft % 60
             
-            if hours > 0 {
-                timerLabel.text = String(format: "%02d:%02d:%02d",
-                                         hours, minutes, seconds)
-            } else {
-                timerLabel.text = String(format: "%02d:%02d",
-                                         minutes, seconds)
+            if let timerLabel = self.timerLabel {
+                if hours > 0 {
+                    timerLabel.text = String(format: "%02d:%02d:%02d",
+                                             hours, minutes, seconds)
+                } else {
+                    timerLabel.text = String(format: "%02d:%02d",
+                                             minutes, seconds)
+                }
             }
         }
     }
@@ -65,6 +77,11 @@ class TaskViewController: UIViewController {
             
             if timesDistracted == 3 {
                 focusMessageLabel.isHidden = false
+            } else if timesDistracted == 6 {
+                focusMessageLabel.text = "Let's focus on your goal for now!"
+            } else if timesDistracted == 9 {
+                focusMessageLabel.text =
+                "Don't waste time. Make time for this! :)"
             }
         }
     }
@@ -85,6 +102,12 @@ class TaskViewController: UIViewController {
         }
     }
     
+    
+    func setUpData(taskData: Tasks?) {
+        taskTitleLabel.text = taskData?.taskName
+        timerLabel.text = String(format: "%02d:00",
+                                 taskData?.duration ?? 0)
+    }
     // MARK: - distraction button
 
     @IBAction func distractionButtonTapped(_ sender: UIButton) {
@@ -101,10 +124,15 @@ class TaskViewController: UIViewController {
         musicService.stop()
         
         // submit data, ALSO with remaining seconds (for progress report)
-        
+        tempTasks.distraction = timesDistracted
+        tempTasks.status = true
+        dataHelper.finishTask(data: tempTasks)
         
         // after submitted -> reset seconds left to 0 for timer label
         secondsLeft = 0
+        
+        // go back to home view controller
+        navigationController?.popToRootViewController(animated: true)
     }
     
     // MARK: - select from music library
@@ -118,8 +146,6 @@ class TaskViewController: UIViewController {
         if let libraryVC = unwindSegue.source as? MusicLibraryViewController {
             // Use data from the view controller which initiated the unwind segue
             if let song = libraryVC.selectedSongTitle {
-//                print(song)
-
                 musicService.play(title: song)
             }
         }
@@ -130,9 +156,13 @@ class TaskViewController: UIViewController {
     @IBAction func playMusicTapped(_ sender: UIButton) {
         musicService.togglePlayback()
 //        if musicService.isPlaying {
-//            playToggleButton.imageView?.image = UIImage(named: Identifiers.Assets.pauseButton)
+//            playToggleButton.setImage(
+//                UIImage(named: Identifiers.Assets.pauseButton),
+//                for: .normal)
 //        } else {
-//            playToggleButton.imageView?.image = UIImage(named: Identifiers.Assets.playButton)
+//            playToggleButton.setImage(
+//                UIImage(named: Identifiers.Assets.playButton),
+//                for: .normal)
 //        }
     }
     

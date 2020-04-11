@@ -17,6 +17,10 @@ class MusicLibraryViewController: UITableViewController {
     var selectedIndex = -1
     var selectedSongTitle: String?
     
+    override func viewWillAppear(_ animated: Bool) {
+        navigationController?.setNavigationBarHidden(false, animated: true)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
