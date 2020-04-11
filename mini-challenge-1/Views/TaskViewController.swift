@@ -94,7 +94,7 @@ class TaskViewController: UIViewController {
     
     func setUpData(taskData: Tasks?) {
         taskTitleLabel.text = taskData?.taskName
-//        durationToFinishTask.text = "\(taskData?.duration ?? 0)"
+        timerLabel.text = "\(taskData?.duration ?? 0)"
 //        startTimeField.text = "\(taskData?.start ?? "0")"
     }
     // MARK: - distraction button
