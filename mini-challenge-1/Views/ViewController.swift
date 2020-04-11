@@ -117,10 +117,16 @@ class ViewController: UIViewController, goalsData, UITableViewDelegate,UITableVi
             destination.tempDate2 = dateString
             
         } else if let destination = segue.destination as? AddTaskViewControllers {
-            destination.flagging = "edit"
-            destination.tempTasks = tempTasks
-            destination.dataGoalsId = selectedGoalsId!
-            destination.goalName = selectedGoalsName!
+            if segue.identifier == "EditItem" {
+                destination.flagging = "edit"
+                destination.tempTasks = tempTasks
+                destination.dataGoalsId = selectedGoalsId!
+                destination.goalName = selectedGoalsName!
+            } else {
+                destination.flagging = flagging
+                destination.dataGoalsId = selectedGoalsId!
+                destination.goalName = selectedGoalsName!
+            }
         }
     }
     

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="3nx-jQ-7MJ">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="3nx-jQ-7MJ">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16086"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -92,27 +92,30 @@
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                         <prototypes>
-                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="TaskTableViewCell" rowHeight="80" id="0Ja-h5-QSt" customClass="TaskTableViewCell" customModule="mini_challenge_1" customModuleProvider="target">
+                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" accessoryType="detailDisclosureButton" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="TaskTableViewCell" rowHeight="80" id="0Ja-h5-QSt" customClass="TaskTableViewCell" customModule="mini_challenge_1" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="28" width="414" height="80"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="0Ja-h5-QSt" id="C2I-gY-4uH">
-                                                    <rect key="frame" x="0.0" y="0.0" width="414" height="80"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="351" height="80"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
                                                         <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7gB-hV-T0p">
                                                             <rect key="frame" x="29" y="15" width="49" height="50"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                             <state key="normal" image="Play Logo"/>
+                                                            <connections>
+                                                                <segue destination="wXn-Vn-IOe" kind="show" id="cXH-Zp-yYx"/>
+                                                            </connections>
                                                         </button>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Task Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="p6t-Xu-QJe">
-                                                            <rect key="frame" x="109" y="11" width="297" height="27"/>
+                                                            <rect key="frame" x="109" y="11" width="207" height="27"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="22"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Duration" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4fT-fR-TJF">
-                                                            <rect key="frame" x="109" y="46" width="297" height="21"/>
+                                                            <rect key="frame" x="109" y="46" width="223" height="21"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                             <color key="textColor" red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="1" colorSpace="calibratedRGB"/>
@@ -123,6 +126,7 @@
                                                 <connections>
                                                     <outlet property="durationLabel" destination="4fT-fR-TJF" id="Iyi-ft-p0y"/>
                                                     <outlet property="nameTaskLabel" destination="p6t-Xu-QJe" id="kaZ-cb-JOP"/>
+                                                    <segue destination="yaq-bO-E46" kind="presentation" identifier="EditItem" trigger="accessoryAction" id="bFu-NI-JAv"/>
                                                 </connections>
                                             </tableViewCell>
                                         </prototypes>
@@ -145,7 +149,6 @@
                         <outlet property="dateLabel" destination="9Ag-sh-ndP" id="PGl-jE-TFu"/>
                         <outlet property="taskTableView" destination="JhW-3n-Cj5" id="I8L-0x-sew"/>
                         <segue destination="3TC-ON-8lf" kind="presentation" identifier="newGoalSegue" id="1O2-hr-vZR"/>
-                        <segue destination="wXn-Vn-IOe" kind="show" identifier="startTask" id="Q84-J1-Uhe"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -721,6 +724,9 @@ How could you improve tomorrow? (160 words)</string>
             <point key="canvasLocation" x="3179.7101449275365" y="341.51785714285711"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="bFu-NI-JAv"/>
+    </inferredMetricsTieBreakers>
     <resources>
         <image name="Back button" width="55" height="21"/>
         <image name="Play Logo" width="49" height="50"/>

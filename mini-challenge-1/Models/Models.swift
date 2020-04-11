@@ -42,7 +42,7 @@ struct Tasks {
     }
 }
 
-struct ReportData {
+    struct ReportData {
     var totalGoalsCompleted: Int
     var totalTaskCompleted: Int
     var productiveTime: Int
@@ -54,4 +54,6 @@ struct ReportData {
         self.totalTaskCompleted = totalTaskCompleted
         self.totalTimeDistraction = totalTimeDistraction
     }
+    
+    
 }
