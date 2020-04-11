@@ -30,6 +30,7 @@ class ReportViewController: UIViewController {
     
     var goalIdArray : [String] = []
     var falseGoalIdArray : [String] = []
+    var goalIdWithNoTaskArray : [String] = []
     
     
     override func viewDidLoad() {
@@ -126,6 +127,12 @@ class ReportViewController: UIViewController {
                             falseGoalIdArray.append(data.value(forKey: "goalId")as! String)
                             goalFlag = 0
                         }
+                        
+                        else
+                        {
+                            print("goal id with no task counted\(goalIdWithNoTaskArray)")
+                           // goalIdWithNoTaskArray.append(goalIdArray[i])
+                        }
                     }
                        
                     
@@ -142,6 +149,8 @@ class ReportViewController: UIViewController {
         for i in 0..<falseGoalIdArray.count {
                    updateGoalStatusData(entity: "Goal", uniqueId: falseGoalIdArray[i], newStatus: false)
                }
+        
+      
         
             
             print(countingDuration)
