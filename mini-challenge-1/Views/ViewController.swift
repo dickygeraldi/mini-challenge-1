@@ -374,7 +374,6 @@ func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> U
     cell.delegate = self as? CustomCellUpdater
 
     let task = taskPerGoals[selectedGoalsId ?? ""]
-    print("DickyTracking table: \(task)")
     cell.nameTaskLabel.text = task?[indexPath.row].taskName
     cell.durationLabel.text = "\(task?[indexPath.row].duration ?? 0) minutes start at \(task?[indexPath.row].start ?? "")"
 
