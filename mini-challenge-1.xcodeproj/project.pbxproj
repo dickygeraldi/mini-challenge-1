@@ -409,7 +409,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 8DC3XDL7Z3;
+				DEVELOPMENT_TEAM = FY2C2X47F9;
 				INFOPLIST_FILE = "mini-challenge-1/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -427,7 +427,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 8DC3XDL7Z3;
+				DEVELOPMENT_TEAM = FY2C2X47F9;
 				INFOPLIST_FILE = "mini-challenge-1/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

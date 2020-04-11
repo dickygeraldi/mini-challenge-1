@@ -505,6 +505,7 @@ How could you improve tomorrow? (160 words)</string>
                                                 </state>
                                                 <connections>
                                                     <action selector="finishTaskTapped:" destination="wXn-Vn-IOe" eventType="touchUpInside" id="k4R-Js-C6q"/>
+                                                    <segue destination="lNJ-Dj-jTQ" kind="unwind" unwindAction="unwindAfterFinishTask:" id="zQa-dP-sor"/>
                                                 </connections>
                                             </button>
                                         </subviews>
@@ -588,6 +589,7 @@ How could you improve tomorrow? (160 words)</string>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="45A-nm-XmV" sceneMemberID="firstResponder"/>
+                <exit id="lNJ-Dj-jTQ" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="1032" y="1000"/>
         </scene>

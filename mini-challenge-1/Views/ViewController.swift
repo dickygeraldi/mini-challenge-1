@@ -38,6 +38,10 @@ class ViewController: UIViewController, goalsData, UITableViewDelegate,UITableVi
     let helper = Helper()
     var flagging = "add"
         
+    override func viewWillAppear(_ animated: Bool) {
+        navigationController?.setNavigationBarHidden(true, animated: true)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -130,6 +134,8 @@ class ViewController: UIViewController, goalsData, UITableViewDelegate,UITableVi
         }   else if let destination = segue.destination as? TaskViewController {
             if segue.identifier == "startTask" {
                 destination.tempTasks = tempTasks
+                // duration is normally in minutes, so multiply by 60
+                destination.secondsLeft = tempTasks.duration * 60
                 destination.dataGoalsId = selectedGoalsId!
                 destination.goalName = selectedGoalsName!
             }
@@ -413,44 +419,50 @@ class ViewController: UIViewController, goalsData, UITableViewDelegate,UITableVi
         }
     }
 
-func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    return taskPerGoals[selectedGoalsId ?? ""]?.count ?? 0
-}
-    
-func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return taskPerGoals[selectedGoalsId ?? ""]?.count ?? 0
+    }
+        
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
-    let cellIdentifier = "TaskTableViewCell"
-    guard let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? TaskTableViewCell else {
-        fatalError("The dequeued cell is not an instance of MealTableViewCell.")
+        let cellIdentifier = "TaskTableViewCell"
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? TaskTableViewCell else {
+            fatalError("The dequeued cell is not an instance of MealTableViewCell.")
+        }
+        
+        cell.delegate = self as? CustomCellUpdater
+
+        let task = taskPerGoals[selectedGoalsId ?? ""]
+        tempTasks = task![indexPath.row]
+        cell.nameTaskLabel.text = task?[indexPath.row].taskName
+        cell.durationLabel.text = "\(task?[indexPath.row].duration ?? 0) minutes start at \(task?[indexPath.row].start ?? "")"
+
+        return cell
+    }
+
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let task = taskPerGoals[selectedGoalsId ?? ""]
+        let taskData = task?[indexPath.row]
+        performSegue(withIdentifier: "startTask", sender: taskData)
     }
     
-    cell.delegate = self as? CustomCellUpdater
+    @IBAction func unwindAfterFinishTask(_ unwindSegue: UIStoryboardSegue) {
+        taskPerGoals = helper.retrieveDataBygoals(entity: "Task")
+        taskTableView.reloadData()
+    }
 
-    let task = taskPerGoals[selectedGoalsId ?? ""]
-    tempTasks = task![indexPath.row]
-    cell.nameTaskLabel.text = task?[indexPath.row].taskName
-    cell.durationLabel.text = "\(task?[indexPath.row].duration ?? 0) minutes start at \(task?[indexPath.row].start ?? "")"
+    // fungsi untuk mendelete dengan cara menswipe
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+           // 1
+        let tasks = taskPerGoals[selectedGoalsId ?? ""]
+        guard let taskId = tasks?[indexPath.row].id else { return }
+        helper.deleteData(entity: "Task", uniqueId: taskId)
 
-    return cell
-}
-
-func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-    let task = taskPerGoals[selectedGoalsId ?? ""]
-    let taskData = task?[indexPath.row]
-    performSegue(withIdentifier: "startTask", sender: taskData)
-}
-
-// fungsi untuk mendelete dengan cara menswipe
-func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-       // 1
-    let tasks = taskPerGoals[selectedGoalsId ?? ""]
-    guard let taskId = tasks?[indexPath.row].id else { return }
-    helper.deleteData(entity: "Task", uniqueId: taskId)
-
-       // 2
-    taskPerGoals = helper.retrieveDataBygoals(entity: "Task")
-    taskTableView.reloadData()
-  }
+           // 2
+        taskPerGoals = helper.retrieveDataBygoals(entity: "Task")
+        taskTableView.reloadData()
+    
+    }
     
 }
 

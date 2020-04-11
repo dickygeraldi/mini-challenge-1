@@ -222,6 +222,27 @@ class Helper {
         
         return counting
     }
+    
+    func finishTask(data task: Tasks) {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+        
+        let managedContext = appDelegate.persistentContainer.viewContext
+        
+        let fetchRequest:NSFetchRequest<NSFetchRequestResult> = NSFetchRequest.init(entityName: "Task")
+        fetchRequest.predicate = NSPredicate(format: "id = %@", task.id)
+        
+        do{
+            let fetch = try managedContext.fetch(fetchRequest)
+            let dataToUpdate = fetch[0] as! NSManagedObject
+            	
+            dataToUpdate.setValue(task.distraction, forKey: "distraction")
+            dataToUpdate.setValue(task.status, forKey: "status")
+            
+            try managedContext.save()
+        }catch let err{
+            print(err)
+        }
+    }
 }
 
 extension UITextField {
