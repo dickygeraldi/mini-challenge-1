@@ -34,7 +34,7 @@ class ViewController: UIViewController, goalsData, UITableViewDelegate,UITableVi
     
     var taskPerGoals = [String: [Tasks]]()
     
-    var tempTasks: [Tasks] = []
+    var tempTasks: Tasks = Tasks.init(distraction: 1, duration: 1, goalId: "10", id: "", start: "", status: true, taskName: "")
     let helper = Helper()
     var flagging = "add"
         
@@ -117,7 +117,8 @@ class ViewController: UIViewController, goalsData, UITableViewDelegate,UITableVi
             destination.tempDate2 = dateString
             
         } else if let destination = segue.destination as? AddTaskViewControllers {
-            destination.flagging = flagging
+            destination.flagging = "edit"
+            destination.tempTasks = tempTasks
             destination.dataGoalsId = selectedGoalsId!
             destination.goalName = selectedGoalsName!
         }
@@ -414,6 +415,7 @@ func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> U
     cell.delegate = self as? CustomCellUpdater
 
     let task = taskPerGoals[selectedGoalsId ?? ""]
+    tempTasks = task![indexPath.row]
     cell.nameTaskLabel.text = task?[indexPath.row].taskName
     cell.durationLabel.text = "\(task?[indexPath.row].duration ?? 0) minutes start at \(task?[indexPath.row].start ?? "")"
 
@@ -429,10 +431,13 @@ func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 // fungsi untuk mendelete dengan cara menswipe
 func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
        // 1
-       tempTasks.remove(at: indexPath.row)
+    let tasks = taskPerGoals[selectedGoalsId ?? ""]
+    guard let taskId = tasks?[indexPath.row].id else { return }
+    helper.deleteData(entity: "Task", uniqueId: taskId)
+
        // 2
-       let indexPaths = [indexPath]
-       tableView.deleteRows(at: indexPaths as [IndexPath],with: .automatic)
+    taskPerGoals = helper.retrieveDataBygoals(entity: "Task")
+    taskTableView.reloadData()
   }
     
 }
