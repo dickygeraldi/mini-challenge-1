@@ -53,20 +53,26 @@ class ViewController: UIViewController, goalsData, UITableViewDelegate,UITableVi
         self.navigationController?.isNavigationBarHidden = true //untuk hilangin navigation bar
         showDate()//untuk set dateLabel jadi tanggal hari ini
         
-        //updateDateData(entity: "Goal", uniqueId: "1", newDate: "09/04/20")
-       // updateDateData(entity: "Goal", uniqueId: "2", newDate: "09/04/20")
+       // updateDateData(entity: "Goal", uniqueId: "1", newDate: "11/04/20")
+        //updateDateData(entity: "Goal", uniqueId: "2", newDate: "11/04/20")
+        //updateDateData(entity: "Goal", uniqueId: "3", newDate: "11/04/20")
+        
+ 
         
         /*data dummy
          //storeDataToGoal(entity: "Goal", id: "1", name: "Mini challenge 1", date: dateString, status: false)
        // storeDataToGoal(entity: "Goal", id: "2", name: "Mini challenge 2", date: dateString, status: true)
          storeDataToGoal(entity: "Goal", id: "3", name: "Mini challenge 3", date: dateString, status: false)
+        // storeDataToGoal(entity: "Goal", id: "4", name: "Mini Challenge 4", date: dateString, status: false)
         
         //storeDataToTask(entity: "Task", id: "1", goalId: "1", taskName: "Wireframe", start: "13:00", duration: 60, distraction: 8, status: true)
        //storeDataToTask(entity: "Task", id: "2", goalId: "1", taskName: "Mockup", start: "14:00", duration: 60, distraction: 2, status: false)
        //storeDataToTask(entity: "Task", id: "3", goalId: "1", taskName: "Prototype", start: "15:00", duration: 120, distraction: 1, status: true)
        //storeDataToTask(entity: "Task", id: "4", goalId: "2", taskName: "Develop", start: "17:00", duration: 40, distraction: 3, status: true)
-       
-        storeDataToTask(entity: "Task", id: "5", goalId: "3", taskName: "Presentation", start: "20:00", duration: 60, distraction: 1, status: true) */
+        storeDataToTask(entity: "Task", id: "5", goalId: "3", taskName: "Presentation", start: "20:00", duration: 60, distraction: 1, status: true)
+           storeDataToTask(entity: "Task", id: "6", goalId: "4", taskName: "Feedback", start: "22:00", duration: 60, distraction: 1, status: true)
+         */
+      
         
  
         checkGoalData()
@@ -115,6 +121,40 @@ class ViewController: UIViewController, goalsData, UITableViewDelegate,UITableVi
             destination.dataGoalsId = selectedGoalsId!
             destination.goalName = selectedGoalsName!
         }
+    }
+    
+    func storeDataToGoal(entity: String, id: String, name: String, date: String, status: Bool) -> String {
+        
+        var message: String = ""
+        
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return "" }
+
+        let context = appDelegate.persistentContainer.viewContext
+
+        let dataOfEntity = NSEntityDescription.entity(forEntityName: entity, in: context)!
+
+        let listOfEntity = NSManagedObject(entity: dataOfEntity, insertInto: context)
+
+        if entity == "Goal" {
+            
+            listOfEntity.setValue(id, forKey: "id")
+            listOfEntity.setValue(name, forKey: "goalName")
+            listOfEntity.setValue(date, forKey: "date")
+            listOfEntity.setValue(status, forKey: "status")
+            
+        }
+
+        do {
+            
+           try context.save()
+            message = "00"
+        } catch let error as NSError {
+           
+            print("Gagal save context \(error), \(error.userInfo)")
+            message = "01"
+        }
+        
+        return message
     }
     
     func updateDateData(entity: String, uniqueId: String, newDate: String) {
@@ -314,7 +354,7 @@ class ViewController: UIViewController, goalsData, UITableViewDelegate,UITableVi
                 print(" start = \(data.value(forKey: "start"))")
                  print(" duration = \(data.value(forKey: "duration"))")
                  print(" distraction = \(data.value(forKey: "distraction"))")
-//                 print((data.value(forKey: "status") as! Bool))
+                print(("status\(data.value(forKey: "status")as! Bool)"))
             }
         } catch {
             print("Failed")
