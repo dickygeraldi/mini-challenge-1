@@ -137,6 +137,27 @@ class ViewController: UIViewController, goalsData, UITableViewDelegate,UITableVi
         dateLabel.text = dateString
     }
     
+    override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
+        if [Identifiers.Segues.toStartTask,
+            Identifiers.Segues.toAddTask,
+            Identifiers.Segues.toEditTask].contains(identifier) {
+            
+            guard let _ = selectedGoalsId else {
+                // alert to select the goal first
+                let alert = UIAlertController(title: "Goal not found",
+                                              message: "Tap any existing goal to select it, and then add, change, or start your task(s).", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "OK", style: .default))
+                self.present(alert, animated: true)
+                
+                return false
+            }
+        }
+        
+        return true
+    }
+    
+    
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let destination = segue.destination as? ReportViewController
         {
@@ -144,18 +165,21 @@ class ViewController: UIViewController, goalsData, UITableViewDelegate,UITableVi
             destination.tempDate2 = dateString
             
         } else if let destination = segue.destination as? AddTaskViewControllers {
-            if segue.identifier == "EditItem" {
+            if segue.identifier == Identifiers.Segues.toEditTask {
                 destination.flagging = "edit"
                 destination.tempTasks = tempTasks
                 destination.dataGoalsId = selectedGoalsId!
                 destination.goalName = selectedGoalsName!
             } else {
+                
+//                if let _ = selectedGoalsId {
                 destination.flagging = flagging
                 destination.dataGoalsId = selectedGoalsId!
                 destination.goalName = selectedGoalsName!
+//                }
             }
         }   else if let destination = segue.destination as? TaskViewController {
-            if segue.identifier == "startTask" {
+            if segue.identifier == Identifiers.Segues.toStartTask {
                 destination.tempTasks = tempTasks
                 // duration is normally in minutes, so multiply by 60
                 destination.secondsLeft = tempTasks.duration * 60
