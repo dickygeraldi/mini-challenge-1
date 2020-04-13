@@ -27,6 +27,7 @@ class TaskViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         navigationController?.setNavigationBarHidden(false, animated: true)
+        navigationItem.setHidesBackButton(true, animated: true)
     }
     
     override func viewDidLoad() {
