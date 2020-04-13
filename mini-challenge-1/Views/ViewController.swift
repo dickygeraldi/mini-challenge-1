@@ -45,17 +45,14 @@ class ViewController: UIViewController, goalsData, UITableViewDelegate,UITableVi
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        to delete goal data
-//        deleteGoalData(entity: "Goal", uniqueId: "0")
-//        deleteGoalData(entity: "Goal", uniqueId: "1")
-//        deleteGoalData(entity: "Goal", uniqueId: "2")
-        
         // Do any additional setup after loading the view.
         hideKeyboardWhenTappedAround()
         taskPerGoals = helper.retrieveDataBygoals(entity: "Task")
         
         self.navigationController?.isNavigationBarHidden = true //untuk hilangin navigation bar
         showDate()//untuk set dateLabel jadi tanggal hari ini
+        
+      
         
        // updateDateData(entity: "Goal", uniqueId: "1", newDate: "11/04/20")
         //updateDateData(entity: "Goal", uniqueId: "2", newDate: "11/04/20")
