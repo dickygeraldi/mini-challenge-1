@@ -10,8 +10,10 @@ import Foundation
 
 struct Identifiers {
     struct Segues {
-        static let toTaskDetail = "startTask"
+        static let toStartTask = "startTask"
         static let toMusicLibrary = "selectSong"
+        static let toAddTask = "addTaskSegue"
+        static let toEditTask = "EditItem"
     }
     struct CellReuse {
         static let song = "songCell"

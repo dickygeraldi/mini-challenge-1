@@ -10,7 +10,7 @@ import UIKit
 
 class EditGoalViewController: UIViewController {
 
-    var delegate = goalsData?
+    var delegate: goalsData?
     
     @IBOutlet weak var viewBox: UIView!
     @IBOutlet weak var goalInput: UITextField!
