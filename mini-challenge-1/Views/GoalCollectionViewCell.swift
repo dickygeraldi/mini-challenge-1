@@ -12,11 +12,18 @@ class GoalCollectionViewCell: UICollectionViewCell {
 
     @IBOutlet weak var cellView: GoalCollectionViewCell!
     @IBOutlet weak var goalLabel: UILabel!
+    @IBOutlet weak var editButton: UIButton!
+    
+    weak var delegate : GoalCollectionViewCell?
+    var goalText: String?
     
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
         self.contentView.isUserInteractionEnabled = false
+        
+        
+
     }
     
     override var isSelected: Bool {
@@ -26,9 +33,12 @@ class GoalCollectionViewCell: UICollectionViewCell {
             
         }
     }
+    @objc func editButtonGoal(sender: Any?){
+        print("Test 11")
+    }
 
+    @IBAction func editGoal(_ sender: UIButton) {
 
-    @IBAction func editGoal(_ sender: Any) {
         print("test")
         
     }

@@ -11,6 +11,7 @@ import CoreData
 
 protocol goalsData{
     func storeDataToGoal(entity: String, name: String, status: BooleanLiteralType)
+    func updateGoalNameData(entity: String, uniqueId: String, newName: String)
     func reloadCollection()
 }
 class ViewController: UIViewController, goalsData, UITableViewDelegate,UITableViewDataSource {
@@ -191,6 +192,27 @@ class ViewController: UIViewController, goalsData, UITableViewDelegate,UITableVi
                 dataToUpdate.setValue(newDate, forKey: "status")
             }
             
+            try managedContext.save()
+        }catch let err{
+            print(err)
+        }
+    }
+    
+    func updateGoalNameData(entity: String, uniqueId: String, newName: String) {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+        
+        let managedContext = appDelegate.persistentContainer.viewContext
+        
+        let fetchRequest:NSFetchRequest<NSFetchRequestResult> = NSFetchRequest.init(entityName: entity)
+        fetchRequest.predicate = NSPredicate(format: "id = %@", uniqueId)
+        
+        do{
+            let fetch = try managedContext.fetch(fetchRequest)
+            let dataToUpdate = fetch[0] as! NSManagedObject
+            
+            if entity == "Goal" {
+                dataToUpdate.setValue(newName, forKey: "goalName")
+            }
             try managedContext.save()
         }catch let err{
             print(err)
@@ -570,6 +592,12 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource{
             cell.layer.cornerRadius = 8
             cell.goalLabel.text = currentGoal!.goalName
             print("cell 1")
+//            cell.delegate = self
+//            cell.editButton.tag = indexPath.row
+//            cell.bringSubviewToFront(cell.editButton)
+//            cell.editButton.addTarget(cell, action: #selector(GoalCollectionViewCell.editButtonGoal), for: .touchUpInside)
+//            cell.editButton.addTarget(self, action: #selector(GoalCollectionViewCell.editGoal(_:)), for: .touchUpInside)
+            
             return cell
         } // after addFlag returns the add cell
         else{ // which is - if(indexPath.row >= addFlag)
