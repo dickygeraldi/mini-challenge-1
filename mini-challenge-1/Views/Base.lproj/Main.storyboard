@@ -99,14 +99,6 @@
                                                     <rect key="frame" x="0.0" y="0.0" width="351" height="80"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
-                                                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7gB-hV-T0p">
-                                                            <rect key="frame" x="29" y="15" width="49" height="50"/>
-                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                            <state key="normal" image="Play Logo"/>
-                                                            <connections>
-                                                                <segue destination="wXn-Vn-IOe" kind="show" identifier="startTask" id="cXH-Zp-yYx"/>
-                                                            </connections>
-                                                        </button>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Task Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="p6t-Xu-QJe">
                                                             <rect key="frame" x="109" y="11" width="207" height="27"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -121,6 +113,10 @@
                                                             <color key="textColor" red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="1" colorSpace="calibratedRGB"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
+                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="Play-Logo" translatesAutoresizingMaskIntoConstraints="NO" id="Mfe-9T-1nj">
+                                                            <rect key="frame" x="20" y="15" width="50" height="50"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                        </imageView>
                                                     </subviews>
                                                 </tableViewCellContentView>
                                                 <connections>
@@ -150,6 +146,7 @@
                         <outlet property="taskTableView" destination="JhW-3n-Cj5" id="I8L-0x-sew"/>
                         <segue destination="3TC-ON-8lf" kind="presentation" identifier="newGoalSegue" id="1O2-hr-vZR"/>
                         <segue destination="pI0-Id-fNW" kind="presentation" identifier="editGoalSegue" id="l5X-26-nuQ"/>
+                        <segue destination="wXn-Vn-IOe" kind="show" identifier="startTask" id="qKf-br-AnR"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -823,6 +820,7 @@ How could you improve tomorrow? (160 words)</string>
     <resources>
         <image name="Back button" width="55" height="21"/>
         <image name="Play Logo" width="49" height="50"/>
+        <image name="Play-Logo" width="27" height="27"/>
         <image name="Plus Logo" width="73" height="74"/>
         <image name="Report Logo" width="27" height="33"/>
         <image name="Save reflection button" width="343" height="41"/>
