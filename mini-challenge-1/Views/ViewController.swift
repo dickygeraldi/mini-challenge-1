@@ -164,6 +164,9 @@ class ViewController: UIViewController, goalsData, UITableViewDelegate,UITableVi
     
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let taskIndex = taskTableView.indexPathForSelectedRow?.row
+        let tasks = taskPerGoals[selectedGoalsId ?? ""]
+        
         if let destination = segue.destination as? ReportViewController
         {
             destination.tempDate = dateString2
@@ -171,13 +174,14 @@ class ViewController: UIViewController, goalsData, UITableViewDelegate,UITableVi
             
         } else if let destination = segue.destination as? AddTaskViewControllers {
             if segue.identifier == Identifiers.Segues.toEditTask {
+//                let taskData = tasks?[taskIndex!]
+            
                 destination.flagging = "edit"
                 destination.tempTasks = tempTasks
                 destination.dataGoalsId = selectedGoalsId!
                 destination.goalName = selectedGoalsName!
             } else {
-                
-//                if let _ = selectedGoalsId {
+ //                if let _ = selectedGoalsId {
                 destination.flagging = flagging
                 destination.dataGoalsId = selectedGoalsId!
                 destination.goalName = selectedGoalsName!
@@ -185,9 +189,10 @@ class ViewController: UIViewController, goalsData, UITableViewDelegate,UITableVi
             }
         }   else if let destination = segue.destination as? TaskViewController {
             if segue.identifier == Identifiers.Segues.toStartTask {
-                destination.tempTasks = tempTasks
+                let taskData = tasks?[taskIndex!]
+                destination.tempTasks = taskData!
                 // duration is normally in minutes, so multiply by 60
-                destination.secondsLeft = tempTasks.duration * 60
+                destination.secondsLeft = taskData!.duration * 60
                 destination.dataGoalsId = selectedGoalsId!
                 destination.goalName = selectedGoalsName!
             }
@@ -506,7 +511,6 @@ class ViewController: UIViewController, goalsData, UITableViewDelegate,UITableVi
         cell.delegate = self as? CustomCellUpdater
 
         let task = taskPerGoals[selectedGoalsId ?? ""]
-        tempTasks = task![indexPath.row]
         cell.nameTaskLabel.text = task?[indexPath.row].taskName
         cell.durationLabel.text = "\(task?[indexPath.row].duration ?? 0) minutes start at \(task?[indexPath.row].start ?? "")"
 
@@ -535,6 +539,12 @@ class ViewController: UIViewController, goalsData, UITableViewDelegate,UITableVi
         taskPerGoals = helper.retrieveDataBygoals(entity: "Task")
         taskTableView.reloadData()
     
+    }
+    
+    func tableView(_ tableView: UITableView, accessoryButtonTappedForRowWith indexPath: IndexPath) {
+        let tasks = taskPerGoals[selectedGoalsId ?? ""]
+        let taskData = tasks?[indexPath.row]
+        tempTasks = taskData!
     }
     
 }

@@ -32,8 +32,8 @@ class Helper {
     }
     
     // function for update rows in core data by id
-    func updateDate(entity: String, uniqueId: String, newData: String) {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+    func updateDate(entity: String, uniqueId: String, taskName: String, duration: Int, start: String) -> String {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return "" }
         
         let managedContext = appDelegate.persistentContainer.viewContext
         
@@ -43,17 +43,17 @@ class Helper {
         do{
             let fetch = try managedContext.fetch(fetchRequest)
             let dataToUpdate = fetch[0] as! NSManagedObject
-            
-            if entity == "Goal" {
-                dataToUpdate.setValue(newData, forKey: "goalName")
-            } else if entity == "Task" {
-                dataToUpdate.setValue(newData, forKey: "taskName")
-            }
+        
+            dataToUpdate.setValue(taskName, forKey: "taskName")
+            dataToUpdate.setValue(duration, forKey: "duration")
+            dataToUpdate.setValue(start, forKey: "start")
             
             try managedContext.save()
         }catch let err{
             print(err)
         }
+        
+        return "00"
     }
     
     // function for store data by entity and Data

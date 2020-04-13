@@ -65,17 +65,20 @@ class AddTaskViewControllers: UIViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let taskId = helper.countingTaskData(entity: "Task", conditional: "")
-        
+        var code = ""
         tempTasks.taskName = taskNameInput.text!
         tempTasks.distraction = 0
         tempTasks.goalId = dataGoalsId
-        tempTasks.id = "\(taskId)"
         tempTasks.status = false
         tempTasks.start = startTimeField.text ?? ""
         tempTasks.duration = (durationToFinishTask.text! as NSString).integerValue
         
-        print("Datanya Dicky: \(tempTasks)")
-        let code = helper.storeData(entity: "Task", dataGoals: nil, dataTask: tempTasks)
+        if flagging == "edit" {
+             code = helper.updateDate(entity: "Task", uniqueId: tempTasks.id, taskName: tempTasks.taskName, duration: tempTasks.duration, start: tempTasks.start)
+        } else {
+             tempTasks.id = "\(taskId)"
+             code = helper.storeData(entity: "Task", dataGoals: nil, dataTask: tempTasks)
+        }
         
         if code != "00" {
             showAlert(message: "Data could'n be save. Try again later")

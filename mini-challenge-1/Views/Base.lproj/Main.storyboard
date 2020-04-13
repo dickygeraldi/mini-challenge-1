@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="3nx-jQ-7MJ">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="3nx-jQ-7MJ">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16086"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -826,9 +826,6 @@ How could you improve tomorrow? (160 words)</string>
             <point key="canvasLocation" x="3179.7101449275365" y="341.51785714285711"/>
         </scene>
     </scenes>
-    <inferredMetricsTieBreakers>
-        <segue reference="bFu-NI-JAv"/>
-    </inferredMetricsTieBreakers>
     <resources>
         <image name="Back button" width="55" height="21"/>
         <image name="Play Logo" width="49" height="50"/>
@@ -842,4 +839,7 @@ How could you improve tomorrow? (160 words)</string>
         <image name="topBackground-1" width="375" height="195"/>
         <image name="􀈊" width="17" height="17"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="bFu-NI-JAv"/>
+    </inferredMetricsTieBreakers>
 </document>
