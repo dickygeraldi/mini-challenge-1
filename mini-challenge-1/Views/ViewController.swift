@@ -12,7 +12,9 @@ import CoreData
 protocol goalsData{
     func storeDataToGoal(entity: String, name: String, status: BooleanLiteralType)
     func updateGoalNameData(entity: String, uniqueId: String, newName: String)
+    func deleteGoalData(entity: String, uniqueId: String)
     func reloadCollection()
+    func refreshGoalData()
 }
 class ViewController: UIViewController, goalsData, UITableViewDelegate,UITableViewDataSource {
     
@@ -21,6 +23,8 @@ class ViewController: UIViewController, goalsData, UITableViewDelegate,UITableVi
     
     @IBOutlet weak var taskTableView: UITableView!
     @IBOutlet weak var collectionView: UICollectionView!
+    
+    @IBOutlet weak var editButtonPen: UIButton!
     
     let dateFormat1: DateFormatter = DateFormatter ()
     var dateString : String = ""
@@ -38,6 +42,8 @@ class ViewController: UIViewController, goalsData, UITableViewDelegate,UITableVi
     var tempTasks: Tasks = Tasks.init(distraction: 1, duration: 1, goalId: "10", id: "", start: "", status: true, taskName: "")
     let helper = Helper()
     var flagging = "add"
+    
+    var editGoal = false
         
     override func viewWillAppear(_ animated: Bool) {
         navigationController?.setNavigationBarHidden(true, animated: true)
@@ -93,8 +99,27 @@ class ViewController: UIViewController, goalsData, UITableViewDelegate,UITableVi
         
     }
     
+    @IBAction func editGoalButton(_ sender: Any) {
+        toggleEdit()
+    }
+    
+    
     @IBAction func viewAddTask(unwindSegue: UIStoryboardSegue) {
         taskTableView.reloadData()
+    }
+    
+    func toggleEdit(){
+        if !editGoal{
+            editGoal = true
+            editButtonPen.setBackgroundImage(#imageLiteral(resourceName: "􀈊 copy 2"), for: UIControl.State.normal)
+            
+        }
+        else
+        {
+            editGoal = false
+            editButtonPen.setBackgroundImage(#imageLiteral(resourceName: "􀈊-1"), for: UIControl.State.normal)
+            
+        }
     }
     
     func getTaskData() {
@@ -559,6 +584,12 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource{
         return false
     }
     
+    // to refresh goal data if some goals are editted or deleted
+    func refreshGoalData(){
+        let goalsArray = retrieveTodayGoalData()
+        goalData = goalsArray
+    }
+    
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
@@ -592,11 +623,7 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource{
             cell.layer.cornerRadius = 8
             cell.goalLabel.text = currentGoal!.goalName
             print("cell 1")
-//            cell.delegate = self
-//            cell.editButton.tag = indexPath.row
-//            cell.bringSubviewToFront(cell.editButton)
-//            cell.editButton.addTarget(cell, action: #selector(GoalCollectionViewCell.editButtonGoal), for: .touchUpInside)
-//            cell.editButton.addTarget(self, action: #selector(GoalCollectionViewCell.editGoal(_:)), for: .touchUpInside)
+
             
             return cell
         } // after addFlag returns the add cell
@@ -616,17 +643,26 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource{
         
         // if selected a goal cell
         if(indexPath.row < addFlag){
-            selectedGoalsId = goalData?[indexPath.row].goalId
-            selectedGoalsName = goalData?[indexPath.row].goalName
-            taskTableView.reloadData()
-            print("SelectedTableIs: \(taskPerGoals[selectedGoalsId!])")
+            // user is selecting the goal to edit
+            if editGoal{
+                toggleEdit()
+                let vc = self.storyboard?.instantiateViewController(withIdentifier: "editGoalViewController") as! EditGoalViewController
+                vc.delegate = self
+                vc.goalId = goalData![indexPath.row].goalId
+                vc.goalName = goalData![indexPath.row].goalName
+                self.present(vc, animated: true)
+            }
+            else{ // normal case
+                selectedGoalsId = goalData?[indexPath.row].goalId
+                selectedGoalsName = goalData?[indexPath.row].goalName
+                taskTableView.reloadData()
+                print("SelectedTableIs: \(taskPerGoals[selectedGoalsId!])")
+            }
         }
         // if selected an add goal cell
         else{
-//            let storyboard = UIStoryboard(name: "Main", bundle: nil)
-//            let vc = storyboard.instantiateViewController(withIdentifier: "NewGoalViewController")
+
             let vc = self.storyboard?.instantiateViewController(withIdentifier: "newGoalViewController") as! NewGoalViewController
-//            let vc = NewGoalViewController()
             vc.delegate = self
             self.present(vc, animated: true)
             

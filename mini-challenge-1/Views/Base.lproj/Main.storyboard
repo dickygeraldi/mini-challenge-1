@@ -135,6 +135,14 @@
                                             <outlet property="delegate" destination="BYZ-38-t0r" id="oey-Qv-J1u"/>
                                         </connections>
                                     </tableView>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="r9q-wj-4GX">
+                                        <rect key="frame" x="358" y="119" width="35" height="35"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <state key="normal" backgroundImage="􀈊"/>
+                                        <connections>
+                                            <action selector="editGoalButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="nZF-JZ-oxo"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" red="0.95294117647058818" green="0.94901960784313721" blue="0.97647058823529409" alpha="1" colorSpace="calibratedRGB"/>
                             </view>
@@ -147,6 +155,7 @@
                         <outlet property="addTaskPerGoals" destination="I6g-Wm-FIp" id="Rbf-AR-8Xl"/>
                         <outlet property="collectionView" destination="C3F-3d-kgW" id="EFi-QY-6oA"/>
                         <outlet property="dateLabel" destination="9Ag-sh-ndP" id="PGl-jE-TFu"/>
+                        <outlet property="editButtonPen" destination="r9q-wj-4GX" id="o3w-5e-x9M"/>
                         <outlet property="taskTableView" destination="JhW-3n-Cj5" id="I8L-0x-sew"/>
                         <segue destination="3TC-ON-8lf" kind="presentation" identifier="newGoalSegue" id="1O2-hr-vZR"/>
                         <segue destination="pI0-Id-fNW" kind="presentation" identifier="editGoalSegue" id="l5X-26-nuQ"/>
@@ -233,13 +242,13 @@
         <!--Edit Goal View Controller-->
         <scene sceneID="ert-14-53h">
             <objects>
-                <viewController id="pI0-Id-fNW" customClass="EditGoalViewController" customModule="mini_challenge_1" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="editGoalViewController" id="pI0-Id-fNW" customClass="EditGoalViewController" customModule="mini_challenge_1" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="785-bz-IyV">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" id="KwX-9T-XBA">
-                                <rect key="frame" x="0.0" y="27" width="414" height="788"/>
+                                <rect key="frame" x="0.0" y="4" width="414" height="811"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="L7p-Sk-dVf">
@@ -250,7 +259,7 @@
                                         </connections>
                                     </button>
                                     <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fWb-Tz-2Ds">
-                                        <rect key="frame" x="0.0" y="577" width="414" height="234"/>
+                                        <rect key="frame" x="0.0" y="604" width="414" height="234"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Edit Goal Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="y5W-q6-3th">
@@ -295,6 +304,9 @@
                                                 <state key="normal" title="Delete">
                                                     <color key="titleColor" red="0.82352941180000006" green="0.98039215690000003" blue="0.98431372549999996" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                 </state>
+                                                <connections>
+                                                    <action selector="deleteGoal:" destination="pI0-Id-fNW" eventType="touchUpInside" id="3nR-co-Ne2"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
@@ -304,7 +316,7 @@
                                 <viewLayoutGuide key="safeArea" id="aa5-lI-VOz"/>
                             </view>
                         </subviews>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="380-TU-JSP"/>
                     </view>
                     <navigationItem key="navigationItem" id="dCj-Ws-VMu"/>
@@ -318,7 +330,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="P6U-El-vxh" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3871" y="-431"/>
+            <point key="canvasLocation" x="3869.5652173913045" y="-431.25"/>
         </scene>
         <!--Report View Controller-->
         <scene sceneID="9gg-yX-0h5">
@@ -830,5 +842,6 @@ How could you improve tomorrow? (160 words)</string>
         <image name="navigation bar background" width="375" height="53"/>
         <image name="round picture" width="160" height="160"/>
         <image name="topBackground-1" width="375" height="195"/>
+        <image name="􀈊" width="17" height="17"/>
     </resources>
 </document>
