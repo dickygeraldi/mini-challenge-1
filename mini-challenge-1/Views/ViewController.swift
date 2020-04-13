@@ -15,6 +15,7 @@ protocol goalsData{
     func deleteGoalData(entity: String, uniqueId: String)
     func reloadCollection()
     func refreshGoalData()
+    func reloadTable()
 }
 class ViewController: UIViewController, goalsData, UITableViewDelegate,UITableViewDataSource {
     
@@ -92,6 +93,10 @@ class ViewController: UIViewController, goalsData, UITableViewDelegate,UITableVi
         collectionView.backgroundColor = UIColor.clear
         taskTableView.dataSource = self
         taskTableView.delegate = self
+    }
+    
+    func reloadTable(){
+        taskTableView.reloadData()
     }
     
     @IBAction func myUnwindAction(unwindSegue:UIStoryboardSegue)

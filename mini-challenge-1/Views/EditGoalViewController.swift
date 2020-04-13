@@ -84,6 +84,7 @@ class EditGoalViewController: UIViewController {
             super.dismiss(animated: true)
             self.delegate?.reloadCollection()
             self.delegate?.refreshGoalData()
+            self.delegate?.reloadTable()
         }
         alert.addAction(okAction)
         self.present(alert, animated: true, completion: nil)
